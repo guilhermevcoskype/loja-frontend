@@ -7,10 +7,14 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CabecalhoComponent } from './cabecalho/cabecalho/cabecalho.component';
+import { RodapeComponent } from './rodape/rodape.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CabecalhoComponent,
+    RodapeComponent,
   ],
   imports: [
     BrowserModule,

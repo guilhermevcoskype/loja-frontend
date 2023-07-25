@@ -13,7 +13,9 @@ import { MessageModalComponent } from 'src/app/shared/componentes/message-modal/
 export class HomeComponent {
   listProdutos: Array<Produto> = [];
 
-  constructor(private readonly produtoService: ProdutoService, private modalService: NgbModal) {
+
+  constructor(private readonly produtoService: ProdutoService,
+    private modalService: NgbModal,) {
     this.getListProdutos();
   }
 
