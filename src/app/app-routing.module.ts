@@ -5,7 +5,12 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'home',
+    redirectTo: 'produtos',
+  },
+  {
+    path: 'produtos',
+    loadChildren: () =>
+      import('./conteudo/conteudo.module').then((m) => m.ConteudoModule),
   },
 ];
 

@@ -6,7 +6,6 @@ import { ConteudoRoutingModule } from './conteudo-routing.module';
 import { ProdutosComponent } from './produtos/produtos.component';
 import { ULancamentosComponent } from './u-lancamentos/u-lancamentos.component';
 import { HomeComponent } from './home/home.component';
-import { CabecalhoComponent } from './cabecalho/cabecalho.component';
 
 
 @NgModule({
@@ -14,7 +13,6 @@ import { CabecalhoComponent } from './cabecalho/cabecalho.component';
     ULancamentosComponent,
     ProdutosComponent,
     HomeComponent,
-    CabecalhoComponent
   ],
   imports: [
     CommonModule,
