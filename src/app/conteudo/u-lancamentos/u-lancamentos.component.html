@@ -13,53 +13,11 @@
       </div>
     </ng-template>
 
-    <!-- <section class="row justify-content-center card-text text-info">
-      <article class="card card-borda card-largura p-0 m-3 col-12 col-md-3">
-        <a> <img class="card-img-top card-posicao-imagem">
-          <div class="card-body">
-            <p class="card-title"></p>
-            <p class="card-text" id="preco"></p>
-          </div>
-        </a>
-      </article>
-    </section> -->
-
     <div class="container mb-3">
-      <div class="row">
+      <div class="row justify-content-center card-text text-info">
         <app-produtos *ngFor="let produto of listProdutos" [produto]="produto"
           class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12">
         </app-produtos>
       </div>
     </div>
   </div>
-
-  <!-- <main>
-    <div class="container">
-        <img class="container mt-3" src="/images/banner-loja.png"
-             alt="banner principal da loja genérica">
-    </div>
-
-    <div class="container-fluid">
-
-        <div th:if="${produtos}" class="container mt-5">
-            <h3 class="text-center titulos">Ultimos lançamentos</h3>
-        </div>
-        <div th:unless="${produtos}" class="container mt-5">
-            <h3 class="text-center titulos">Sem produtos disponíveis</h3>
-        </div>
-
-        <section class="row justify-content-center card-text text-info">
-            <article th:each="produto : ${produtos}"
-                     class="card card-borda card-largura p-0 m-3 col-12 col-md-3">
-                <a th:href="@{'/detalhes/'+${produto.codigo}}"> <img
-                        class="card-img-top card-posicao-imagem"
-                        th:src="${produto.urlImagem}">
-                    <div class="card-body">
-                        <p th:text="${produto.descricao}" class="card-title"></p>
-                        <p th:text="${produto.precoFormatado}" class="card-text"
-                           id="preco"></p>
-                    </div></a>
-            </article>
-        </section>
-    </div>
-</main> -->

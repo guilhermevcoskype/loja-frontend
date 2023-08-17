@@ -1,42 +1,20 @@
-<div class="card">
+<div class="card card-borda  p-0 m-3">
 	<img
-    [src]="produto.nome | defaultImage"
-    class="card-img-top"
-    [alt]="produto.nome">
+    [src]="produto.urlImagem | defaultImage"
+    class="card-img-top card-posicao-imagem"
+    [alt]="produto.descricao">
 	<div class="card-body">
 		<h5 class="card-title">
-      {{ produto.nome | ellipsify: 25 }}
-			<span class="badge badge-primary">{{ produto.nome | uppercase }}</span>
+      {{ produto.descricao | ellipsify: 25 }}
+			<span class="badge badge-primary">{{ produto.descricao | uppercase }}</span>
     </h5>
 		<p class="card-text">
-      {{ produto.quantidade }} is a {{ produto.nome }} that was released in {{ produto.id }}
+      {{ produto.preco | currency:'BRL' }}
     </p>
 		<a
-      routerLink="/produto-detail"
-      class="btn btn-primary">
-			Learn More
+      routerLink="/carrinho"
+      class="btn btn-primary ">
+			Comprar
 		</a>
 	</div>
 </div>
-<!-- <div class="card">
-	<img
-    [src]="produto.nome | defaultImage"
-    class="card-img-top"
-    [alt]="produto.nome">
-	<div class="card-body">
-		<h5 class="card-title">
-      {{ produto.nome | ellipsify: 25 }}
-			<span class="badge badge-primary">{{ produto.nome | uppercase }}</span>
-    </h5>
-		<p class="card-text">
-      {{ produto.quantidade }} is a {{ produto.nome }} that was released in {{ produto.id }}
-    </p>
-		<a
-      routerLink="/produto-detail"
-      [queryParams]="{ produtoId: produto.quantidade }"
-      class="btn btn-primary">
-			Learn More
-		</a>
-	</div>
-</div>
- -->

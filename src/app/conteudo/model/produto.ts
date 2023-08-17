@@ -1,5 +1,15 @@
 export interface Produto {
   id: number,
-  nome: string,
-  quantidade: number
+
+  descricao: string,
+
+  estoque: number,
+
+  preco: number,
+
+  dataInsercao: Date,
+
+  urlImagem: string,
+
+  tipoProduto: string
 }

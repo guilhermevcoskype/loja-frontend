@@ -9,8 +9,18 @@ import { Produto } from 'src/app/conteudo/model/produto';
 
 export class ProdutosComponent {
   @Input() produto: Produto = {
-    id:0,
-    nome: '',
-    quantidade:0
+    id: 0,
+
+    descricao: "",
+
+    estoque: 0,
+
+    preco: 0,
+
+    dataInsercao: new Date(),
+
+    urlImagem: "",
+
+    tipoProduto: ""
   };
 }

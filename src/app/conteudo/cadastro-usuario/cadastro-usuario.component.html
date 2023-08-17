@@ -1,0 +1,24 @@
+<main>
+  <div class="container">
+    <h1 class="titulos">Cadastro de usuário</h1>
+    <form [formGroup]="formulario">
+      <div class="form-group">
+        <label for="email">Endereço de email</label>
+        <input type="email" class="form-control" id="email" formControlName="nome" aria-describedby="emailHelp"
+          placeholder="Seu email" required="required"> <small id="emailHelp" class="form-text text-muted"
+          *ngIf="formulario.get('nome')?.errors?.['required'] && formulario.get('nome')?.touched">O campo é
+          obrigatório.</small>
+      </div>
+      <div class="form-group">
+        <label for="senha">Senha</label>
+        <input type="password" class="form-control" id="senha" formControlName="senha" aria-describedby="passwordHelp"
+          placeholder="Senha" required="required"><small id="passwordHelp" class="form-text text-muted"
+          *ngIf="formulario.get('senha')?.errors?.['required'] && formulario.get('senha')?.touched">O campo é
+          obrigatório.</small>
+      </div>
+      <div class="form-inline pt-3">
+        <button (click)="enviar()" [disabled]="!formulario.valid" [ngClass]="habilitarBotao()">Enviar</button>
+      </div>
+    </form>
+  </div>
+</main>

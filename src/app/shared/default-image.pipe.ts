@@ -1,3 +1,4 @@
+import { AppComponent } from './../app.component';
 import { Pipe, PipeTransform } from "@angular/core";
 
 @Pipe({
@@ -5,6 +6,6 @@ import { Pipe, PipeTransform } from "@angular/core";
 })
 export class DefaultImagePipe implements PipeTransform {
   transform(imagePath: string): string {
-    return imagePath === "N/A" ? "https://picsum.photos/seed/picsum/200/300" : imagePath;
+    return imagePath === "N/A" ? "../../../assets/imagens/produto sem imagem.png" : imagePath;
   }
 }

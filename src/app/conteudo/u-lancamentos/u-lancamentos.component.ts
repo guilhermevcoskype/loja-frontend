@@ -26,7 +26,7 @@ export class ULancamentosComponent {
           return [];
         })
       )
-      .subscribe((listProdutos) => {
+      .subscribe(listProdutos => {
         this.listProdutos = listProdutos
       });
   }
