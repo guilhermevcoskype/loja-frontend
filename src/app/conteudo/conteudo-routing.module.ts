@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { ULancamentosComponent } from './u-lancamentos/u-lancamentos.component';
 import { LoginComponent } from './login/login.component';
 import { CadastroUsuarioComponent } from './cadastro-usuario/cadastro-usuario.component';
+import { CadastroProdutoComponent } from './cadastro-produto/cadastro-produto.component';
+import { BuscaProdutoComponent } from './busca-produto/busca-produto.component';
 
 const routes: Routes = [
   {
@@ -21,6 +23,14 @@ const routes: Routes = [
   {
     path: 'cadastroUsuario',
     component: CadastroUsuarioComponent
+  },
+  {
+    path: 'cadastroProduto',
+    component: CadastroProdutoComponent
+  },
+  {
+    path: 'buscaProduto',
+    component: BuscaProdutoComponent
   }
 ];
 

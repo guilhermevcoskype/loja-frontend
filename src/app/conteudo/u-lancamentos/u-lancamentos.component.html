@@ -15,9 +15,12 @@
 
     <div class="container mb-3">
       <div class="row justify-content-center card-text text-info">
-        <app-produtos *ngFor="let produto of listProdutos" [produto]="produto"
-          class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12">
+        <app-produtos
+          *ngFor="let produto of listProdutos | paginate: { currentPage: paginaAtual, itemsPerPage: itemsPerPage, totalItems: totalProdutos } let i = index"
+          [produto]="produto" class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12">
         </app-produtos>
+        <pagination-controls previousLabel="Anterior" nextLabel="Proximo" [responsive]="true"
+          (pageChange)="handlePageChange($event)"></pagination-controls>
       </div>
     </div>
   </div>

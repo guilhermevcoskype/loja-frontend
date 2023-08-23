@@ -1,5 +1,9 @@
-a:hover {
-	text-decoration: none;
+.imagem-div {
+  object-fit: cover;
+}
+
+button :hover {
+  text-decoration: solid;
 }
 
 .card-largura {

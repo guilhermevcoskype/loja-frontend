@@ -1,33 +1,32 @@
 import { Injectable } from '@angular/core';
-import { DadoToken } from '../model/dadoToken';
+import { DadoToken, DadoToken as string } from '../model/dadoToken';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoginService {
-
-  private token!: DadoToken;
-  private nomeSource = new BehaviorSubject<string>('');
+  private token!: string;
+  private nomeSource = new BehaviorSubject<DadoToken>(new DadoToken());
   nome = this.nomeSource.asObservable();
 
-  setToken(token: DadoToken) {
+  setToken(token: string) {
     this.token = token;
   }
 
-  resetToken(){
-    this.token.token = "";
+  resetToken() {
+    this.token = '';
   }
 
   getToken() {
     return this.token;
   }
 
-  setNome(nome: string){
+  setNome(nome: DadoToken) {
     this.nomeSource.next(nome);
   }
 
-  getNome(){
+  getNome() {
     return this.nome;
   }
 }

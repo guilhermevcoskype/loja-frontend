@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
 import { LoginService } from '../../conteudo/service/login.service';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { DadoToken } from '../../conteudo/model/dadoToken';
-import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-cabecalho',
@@ -24,18 +23,25 @@ export class CabecalhoComponent implements OnInit {
   logado: boolean = false;
   nomeLogado: string = '';
   busca: string = '';
+  tokenDecodificado!: DadoToken;
   public isCollapsed = false;
 
-  constructor(private router: Router, private loginService: LoginService, private jwtHelper: JwtHelperService) {}
+  constructor(
+    private router: Router,
+    private loginService: LoginService,
+  ) {}
 
   ngOnInit(): void {
-    this.loginService.nome.subscribe((nome) => {
-      this.nomeLogado = nome;
-      if (this.nomeLogado != '') this.logado = true
-      else this.logado = false;
+    this.loginService.nome.subscribe((token) => {
+      this.tokenDecodificado = token;
+      if (token.sub != '') {
+        this.logado = true;
+        this.nomeLogado = token.sub;
+      } else {
+        this.logado = false;
+      }
     });
     console.log(this.loginService.getToken());
-    // const token = this.jwtHelper.decodeToken(this.loginService.getToken().token);
   }
 
   public carregarTela(tela: string) {
@@ -44,12 +50,10 @@ export class CabecalhoComponent implements OnInit {
 
   acaoBotaoSair() {
     this.loginService.resetToken();
-    this.loginService.setNome('');
+    this.loginService.setNome(new DadoToken());
   }
 
   realizarBusca(busca: string) {
-    // buscarNoBD
-    console.log('Digitou:' + busca);
+    this.router.navigate(['/conteudo/buscaProduto'], { state: { busca } });
   }
-
 }

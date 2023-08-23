@@ -13,7 +13,7 @@ export class UsuarioService {
 
   constructor(private httpClient: HttpClient) {}
 
-  logar(usuario: Usuario): Observable<DadoToken> {
+  logar(usuario: Usuario): Observable<string> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': 'http://localhost:4200',
@@ -22,7 +22,7 @@ export class UsuarioService {
     });
     const options = { headers: headers };
     return this.httpClient
-      .post<DadoToken>(this.API+"login", usuario, options)
+      .post<string>(this.API+"login", usuario, options)
       .pipe(take(1));
   }
 

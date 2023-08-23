@@ -3,27 +3,32 @@ import { NgModule } from '@angular/core';
 
 import { SharedModule } from '../shared/shared.module';
 import { ConteudoRoutingModule } from './conteudo-routing.module';
-import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { ProdutosComponent } from './produtos/produtos.component';
 import { ULancamentosComponent } from './u-lancamentos/u-lancamentos.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CadastroUsuarioComponent } from './cadastro-usuario/cadastro-usuario.component';
+import { CadastroProdutoComponent } from './cadastro-produto/cadastro-produto.component';
+import { BuscaProdutoComponent } from './busca-produto/busca-produto.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
   declarations: [
     ULancamentosComponent,
     ProdutosComponent,
-    HomeComponent,
     LoginComponent,
-    CadastroUsuarioComponent
+    CadastroUsuarioComponent,
+    CadastroProdutoComponent,
+    BuscaProdutoComponent
   ],
   imports: [
     CommonModule,
     ConteudoRoutingModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule,
+    NgxPaginationModule
   ]
 })
 export class ConteudoModule { }

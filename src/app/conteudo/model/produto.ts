@@ -1,15 +1,15 @@
-export interface Produto {
-  id: number,
+export class Produto {
+  id: number = 0;
 
-  descricao: string,
+  descricao: string = '';
 
-  estoque: number,
+  estoque: number = 0;
 
-  preco: number,
+  preco: number = 0;
 
-  dataInsercao: Date,
+  dataInsercao: Date = new Date();
 
-  urlImagem: string,
+  urlImagem: string = '';
 
-  tipoProduto: string
+  tipoProduto: string = '';
 }

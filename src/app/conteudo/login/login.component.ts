@@ -7,6 +7,7 @@ import { Usuario } from '../model/usuario';
 import { LoginService } from '../service/login.service';
 import { UsuarioService } from '../service/usuario.service';
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,8 @@ export class LoginComponent implements OnInit {
     private formBuilder: NonNullableFormBuilder,
     private usuarioService: UsuarioService,
     private loginService: LoginService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private jwtHelper: JwtHelperService
   ) {}
 
   ngOnInit(): void {
@@ -52,8 +54,12 @@ export class LoginComponent implements OnInit {
         next: (retorno) => {
           console.log(retorno);
           this.loginService.setToken(retorno);
-          this.loginService.setNome(this.formulario.get('nome')?.value);
-          this.router.navigate(["/conteudo/uLancamentos"]);
+          const tokenDecodificado = this.jwtHelper.decodeToken(JSON.stringify(retorno));
+          if(tokenDecodificado){
+            console.log(tokenDecodificado);
+            this.loginService.setNome(tokenDecodificado);
+            this.router.navigate(["/conteudo/uLancamentos"]);
+          }
         },
         error: (error: HttpErrorResponse) => {
           console.log(error);
