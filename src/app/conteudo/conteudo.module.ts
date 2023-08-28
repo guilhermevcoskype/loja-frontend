@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule,CurrencyPipe } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { SharedModule } from '../shared/shared.module';
@@ -11,6 +11,7 @@ import { CadastroUsuarioComponent } from './cadastro-usuario/cadastro-usuario.co
 import { CadastroProdutoComponent } from './cadastro-produto/cadastro-produto.component';
 import { BuscaProdutoComponent } from './busca-produto/busca-produto.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { CarrinhoComponent } from './carrinho/carrinho.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     LoginComponent,
     CadastroUsuarioComponent,
     CadastroProdutoComponent,
-    BuscaProdutoComponent
+    BuscaProdutoComponent,
+    CarrinhoComponent
   ],
   imports: [
     CommonModule,
@@ -29,6 +31,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ReactiveFormsModule,
     FormsModule,
     NgxPaginationModule
-  ]
+  ],
+  providers: [CurrencyPipe]
 })
 export class ConteudoModule { }

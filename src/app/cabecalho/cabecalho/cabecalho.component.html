@@ -25,11 +25,11 @@
               <fa-icon [icon]="faBarras" class="fas fa-bars text-info"></fa-icon>
               cadastrar
             </a></li>
-          <li *ngIf="tokenDecodificado.sub != ''"><a class="nav-item nav-link text-white w-auto" routerLink="#">
+          <li *ngIf="tokenDecodificado.sub != ''"><a class="nav-item nav-link text-white w-auto" routerLink="/conteudo/carrinho">
               <fa-icon [icon]="faCoracao" class="far fa-heart text-info h5 mr-1"></fa-icon>
               favoritos
             </a></li>
-          <li *ngIf="tokenDecodificado.sub != ''"><a class="nav-item nav-link text-white" routerLink="#">
+          <li *ngIf="tokenDecodificado.sub != ''"><a class="nav-item nav-link text-white" routerLink="/conteudo/carrinho">
               <fa-icon [icon]="faCarrinho" class="fas fa-shopping-cart text-info h5"></fa-icon>
               carrinho
             </a></li>

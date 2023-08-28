@@ -1,5 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { Produto } from 'src/app/conteudo/model/produto';
+import { CarrinhoService } from '../service/carrinho.service';
+import { CarrinhoItem } from '../model/carrinhoItem';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-produtos',
@@ -23,4 +26,13 @@ export class ProdutosComponent {
 
     tipoProduto: ""
   };
+
+  constructor(private carrinhoService: CarrinhoService,
+    private router: Router){
+  }
+
+  addCarrinho(){
+    this.carrinhoService.add(new CarrinhoItem(this.produto));
+    this.router.navigate(['/conteudo/carrinho']);
+  }
 }

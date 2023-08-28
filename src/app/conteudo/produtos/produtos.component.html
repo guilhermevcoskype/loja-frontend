@@ -11,10 +11,10 @@
 		<p class="card-text">
       {{ produto.preco | currency:'BRL' }}
     </p>
-		<a
-      routerLink="/carrinho"
+		<button
+      (click)="addCarrinho()"
       class="btn btn-primary ">
 			Comprar
-		</a>
+		</button>
 	</div>
 </div>

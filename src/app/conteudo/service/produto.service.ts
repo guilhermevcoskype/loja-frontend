@@ -34,4 +34,8 @@ export class ProdutoService {
       .set('page', page-1)
     return this.httpClient.get<any>(this.API+'/busca', { params });
   }
+
+  buscarProdutoPorCodigo(codigo: number): Observable<Produto> {
+    return this.httpClient.get<Produto>(this.API+'/'+codigo);
+  }
 }

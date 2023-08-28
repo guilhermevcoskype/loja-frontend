@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { CadastroUsuarioComponent } from './cadastro-usuario/cadastro-usuario.component';
 import { CadastroProdutoComponent } from './cadastro-produto/cadastro-produto.component';
 import { BuscaProdutoComponent } from './busca-produto/busca-produto.component';
+import { CarrinhoComponent } from './carrinho/carrinho.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
   {
     path: 'buscaProduto',
     component: BuscaProdutoComponent
+  },
+  {
+    path: 'carrinho',
+    component: CarrinhoComponent
   }
 ];
 

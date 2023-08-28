@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ProdutoService } from '../service/produto.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageModalComponent } from 'src/app/shared/componentes/message-modal/message-modal.component';
+import { BuscaService } from '../service/busca.service';
 
 @Component({
   selector: 'app-busca-produto',
@@ -22,7 +23,8 @@ export class BuscaProdutoComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private readonly produtoService: ProdutoService
+    private readonly produtoService: ProdutoService,
+    private buscaService: BuscaService
   ) {
     this.route.paramMap.subscribe((params) => {
       this.busca = history.state.busca;
@@ -30,7 +32,6 @@ export class BuscaProdutoComponent implements OnInit {
   }
 
   buscarProduto() {
-    console.log(this.busca);
     this.produtoService.buscarProduto(this.busca, this.paginaAtual).subscribe({
       next: (page) => {
         this.listProdutos = page.content;
@@ -54,6 +55,10 @@ export class BuscaProdutoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.buscaService.busca.subscribe({
+      next: (response) => {this.busca = response; this.buscarProduto()},
+      error: (error) => {console.log('ocorreu um erro')}
+    });
     this.buscarProduto();
   }
 }

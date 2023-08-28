@@ -6,6 +6,7 @@ import { Produto } from '../model/produto';
 import { ProdutoService } from '../service/produto.service';
 import { UsuarioService } from '../service/usuario.service';
 import { MessageModalComponent } from 'src/app/shared/componentes/message-modal/message-modal.component';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-cadastro-produto',
@@ -26,7 +27,8 @@ export class CadastroProdutoComponent implements OnInit {
     private formBuilder: NonNullableFormBuilder,
     private usuarioService: UsuarioService,
     private modalService: NgbModal,
-    private produtoService: ProdutoService
+    private produtoService: ProdutoService,
+    private currencyPipe: CurrencyPipe
   ) {}
 
   ngOnInit(): void {
@@ -39,10 +41,10 @@ export class CadastroProdutoComponent implements OnInit {
 
       estoque: [
         0,
-        Validators.compose([Validators.required, Validators.min(1)]),
+        Validators.compose([Validators.required, Validators.min(1), Validators.pattern('\d*')]),
       ],
 
-      preco: [0, Validators.compose([Validators.required, Validators.min(1)])],
+      preco: [0, Validators.compose([Validators.required, Validators.min(1), Validators.pattern('^\d+(\.\d{2})?$')])],
 
       dataInsercao: [new Date()],
 

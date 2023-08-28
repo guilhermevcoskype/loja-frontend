@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import {
-  faSearch,
   faBars,
   faHeart,
+  faSearch,
   faShoppingCart,
 } from '@fortawesome/free-solid-svg-icons';
-import { Router } from '@angular/router';
-import { LoginService } from '../../conteudo/service/login.service';
-import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { BuscaService } from 'src/app/conteudo/service/busca.service';
 import { DadoToken } from '../../conteudo/model/dadoToken';
+import { LoginService } from '../../conteudo/service/login.service';
 
 @Component({
   selector: 'app-cabecalho',
@@ -21,14 +21,15 @@ export class CabecalhoComponent implements OnInit {
   faCoracao = faHeart;
   faCarrinho = faShoppingCart;
   logado: boolean = false;
-  nomeLogado: string = '';
-  busca: string = '';
+  nomeLogado!: string;
+  busca!: string;
   tokenDecodificado!: DadoToken;
   public isCollapsed = false;
 
   constructor(
     private router: Router,
     private loginService: LoginService,
+    private buscaService: BuscaService
   ) {}
 
   ngOnInit(): void {
@@ -54,6 +55,7 @@ export class CabecalhoComponent implements OnInit {
   }
 
   realizarBusca(busca: string) {
-    this.router.navigate(['/conteudo/buscaProduto'], { state: { busca } });
+    // this.router.navigate(['/conteudo/buscaProduto'], { state: { busca } });
+    this.buscaService.setBusca(this.busca, this.router);
   }
 }
