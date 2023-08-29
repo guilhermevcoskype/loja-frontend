@@ -26,7 +26,6 @@ export class ULancamentosComponent {
   getListProdutos() {
     return this.produtoService.getListProdutos(this.paginaAtual).subscribe({
       next: (page) => {
-        console.log(page);
         this.listProdutos = page.content;
         this.totalProdutos = page.totalElements;
         this.itemsPerPage = page.size;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Produto } from '../model/produto';
 import { ProdutoService } from '../service/produto.service';
 import { CarrinhoItem } from '../model/carrinhoItem';
@@ -9,34 +9,40 @@ import { CarrinhoService } from '../service/carrinho.service';
   templateUrl: './carrinho.component.html',
   styleUrls: ['./carrinho.component.css'],
 })
-export class CarrinhoComponent implements OnInit {
+export class CarrinhoComponent implements OnInit, OnDestroy {
 
-  mapItens = new Map<CarrinhoItem, number>();
   carrinho : CarrinhoService;
+  mapItensKeys!: CarrinhoItem[];
 
 
   constructor(private carrinhoService: CarrinhoService) {
-    this.mapItens = carrinhoService.mapItens;
     this.carrinho = carrinhoService;
+    this.mapItensKeys = Array.from(this.carrinho.mapItens.keys());
   }
-  ngOnInit(): void {}
-
-  getQuantidade(item: CarrinhoItem) {
-    /* if (!itens.containsKey(item)) {
-          itens.put(item, 0);
-      }
-      return itens.get(item); */
-    if (!this.mapItens.has(item)) {
-      this.mapItens.set(item, 0);
-    }
-    return this.mapItens.get(item);
+  ngOnInit(): void {
+    console.log(this.mapItensKeys);
+    console.log(this.carrinho);
   }
 
-  getQuantidadeTotal(): number {
-    let total = 0;
-    for (const quantidade of this.mapItens.values()) {
-      total += quantidade;
-    }
-    return total;
+  ngOnDestroy(): void {
+    console.log(this.mapItensKeys);
+    console.log(this.carrinho);
+  }
+
+  aumentarQuantidadeItem(item: CarrinhoItem) {
+    this.carrinho.aumentarQuantidadeItem(item);
+    this.mapItensKeys = Array.from(this.carrinho.mapItens.keys());
+  }
+
+  diminuirQuantidadeItem(item: CarrinhoItem) {
+    this.carrinho.getQuantidadeItem(item)! > 1
+        ? this.carrinho.diminuirQuantidadeItem(item)
+        : this.carrinho.removerItem(item);
+    this.mapItensKeys = Array.from(this.carrinho.mapItens.keys());
+  }
+
+  removerItem(item: CarrinhoItem) {
+    this.carrinho.removerItem(item);
+    this.mapItensKeys = Array.from(this.carrinho.mapItens.keys());
   }
 }

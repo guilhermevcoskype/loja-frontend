@@ -1,6 +1,6 @@
 <main class="container">
   <h1 class="mt-4 titulos">Carrinho</h1>
-  <table *ngIf="mapItens != null && carrinho.getTotalSemParam() != 0; else carrinhoCheio"
+  <table *ngIf="carrinho.mapItens != null && carrinho.getQuantidadeTotal() != 0; else carrinhoCheio"
     class="container mt-5 mb-5 table-striped">
     <thead>
       <tr class="tamanho-linha-carrinho border ml-1">
@@ -12,7 +12,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr class="tamanho-linha-carrinho border ml-1" *ngFor="let carrinhoItem of mapItens.keys()">
+      <tr class="tamanho-linha-carrinho border ml-1" *ngFor="let carrinhoItem of mapItensKeys">
         <th scope="row" class="  text-center"><img class="card-largura card-img-top card-posicao-imagem" src={{carrinhoItem.produto.urlImagem}}>
         </th>
         <td class="  text-center">{{carrinhoItem.produto.descricao}}</td>
@@ -20,16 +20,16 @@
           <div class="btn-group inline" role="group">
             <!-- <form action="#" th:action="@{/carrinho/diminuir}">
               <input type="hidden" th:value="${carrinhoItem.produto.codigo}" name="codigo">-->
-            <button type="submit" title="diminuir" class="btn btn-lihgt border">-</button>
+            <button title="diminuir" class="btn btn-lihgt border" (click)="diminuirQuantidadeItem(carrinhoItem)">-</button>
             <!-- </form> -->
-            <button type="submit" title="quantidade" class="btn " th:text="${carrinho.getQuantidade(carrinhoItem)}"
-              disabled></button>
+            <button type="text" title="quantidade" class="btn "
+              disabled>{{carrinho.getQuantidadeItem(carrinhoItem)}}</button>
             <!-- <form action="#" th:action="@{/carrinho/aumentar}">
               <input type="hidden" th:value="${carrinhoItem.produto.codigo}" name="codigo">-->
-            <button type="submit" title="aumentar" class="btn btn-lihgt border">+</button>
+            <button title="aumentar" class="btn btn-lihgt border" (click)="aumentarQuantidadeItem(carrinhoItem)">+</button>
             <!-- </form> -->
           </div>
-        <td class="  text-center">{{getQuantidade(carrinhoItem)}}
+        <td class="  text-center">{{carrinhoItem.getPrecoTotal(carrinho.getQuantidadeItem(carrinhoItem)) | currency: 'BRL'}}
           <!-- <span
             th:text="${carrinhoItem.getTotalFormatado(carrinho.getQuantidade(carrinhoItem))}"></span> -->
 
@@ -37,7 +37,7 @@
         <td class="  text-center">
           <!-- <form action="#" th:action="@{/carrinho/remover}">
             <input type="hidden" th:value="${carrinhoItem.produto.codigo}" name="codigo">-->
-          <button type="submit" title="remover" class="btn btn-dark">remover</button>
+          <button title="remover" class="btn btn-dark" (click)="removerItem(carrinhoItem)">remover</button>
           <!-- </form> -->
         </td>
       </tr>
@@ -46,11 +46,11 @@
       <tr>
         <th class="  text-center">Total</th>
         <td></td>
-        <td></td>
-        <td class="  text-center">{{getQuantidadeTotal()}}</td>
+        <td class="  text-center">{{carrinho.getQuantidadeTotal()}}</td>
+        <td class="  text-center">{{carrinho.getPrecoTotal() | currency: 'BRL'}}</td>
         <td class="  text-right pr-1">
           <!-- <form action="#" th:action="@{/pagamento}" method="post"> -->
-          <button type="submit" title="finalizar" class="btn btn-dark">Finalizar</button>
+          <button title="finalizar" class="btn btn-dark">Finalizar</button>
           <!-- </form> -->
         </td>
       </tr>

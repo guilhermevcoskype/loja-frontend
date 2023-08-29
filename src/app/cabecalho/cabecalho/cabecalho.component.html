@@ -8,16 +8,16 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <form class="form-busca my-2 my-lg-0 w-50 w-sm-100">
+      <div class="form-busca my-2 my-lg-0 w-50 w-sm-100">
         <div class="row w-100  m-0 mr-sm-2">
           <div class="col px-0 left-input-busca bg-white"></div>
-          <input class="col-10 m-0 search_input px-0" placeholder="O que você está buscando?" [(ngModel)]="busca"
-            name="busca" aria-label="Search">
-          <button class="col-1 search_icon px-0 bg-white" (click)="realizarBusca(busca)">
+          <input class="col-10 m-0 search_input px-0" placeholder="O que você está buscando?"
+            [formControl]="busca" aria-label="Search">
+          <button class="col-1 search_icon px-0 bg-white">
             <fa-icon [icon]="faBusca" class="fas fa-search text-info"></fa-icon>
           </button>
         </div>
-      </form>
+      </div>
 
       <div class="collapse navbar-collapse mx-auto" id="navbarNavAltMarkup">
         <ul class="navbar-nav">
@@ -25,17 +25,19 @@
               <fa-icon [icon]="faBarras" class="fas fa-bars text-info"></fa-icon>
               cadastrar
             </a></li>
-          <li *ngIf="tokenDecodificado.sub != ''"><a class="nav-item nav-link text-white w-auto" routerLink="/conteudo/carrinho">
+          <li ><a class="nav-item nav-link text-white w-auto" routerLink="/conteudo/carrinho">
               <fa-icon [icon]="faCoracao" class="far fa-heart text-info h5 mr-1"></fa-icon>
               favoritos
             </a></li>
-          <li *ngIf="tokenDecodificado.sub != ''"><a class="nav-item nav-link text-white" routerLink="/conteudo/carrinho">
+          <li ><a class="nav-item nav-link text-white" routerLink="/conteudo/carrinho">
               <fa-icon [icon]="faCarrinho" class="fas fa-shopping-cart text-info h5"></fa-icon>
               carrinho
             </a></li>
         </ul>
       </div>
     </div>
+
+    <div class="alert" *ngIf="mensagemErro">{{mensagemErro}}</div>
 
     <div *ngIf="!logado;else usuarioLogado">
       <button class="nav-item nav-link text-white align-self-right p-3" (click)="carregarTela('login')">

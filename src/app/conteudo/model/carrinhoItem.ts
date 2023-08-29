@@ -7,11 +7,8 @@ export class CarrinhoItem {
     this.produto = produto;
   }
 
-  getTotal(quantidade: number) {
-    return Number(this.produto.preco) * quantidade;
-  }
-
-  getTotalFormatado(quantidade: number) {
-    return Number(this.produto.preco) * quantidade;
+  getPrecoTotal(quantidade?: number) {
+    if (quantidade) return Number(this.produto.preco) * quantidade;
+    else return 0;
   }
 }

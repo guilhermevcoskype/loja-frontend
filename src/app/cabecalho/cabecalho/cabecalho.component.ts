@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
   faBars,
@@ -6,6 +7,14 @@ import {
   faSearch,
   faShoppingCart,
 } from '@fortawesome/free-solid-svg-icons';
+import {
+  catchError,
+  debounceTime,
+  filter,
+  switchMap,
+  tap,
+  throwError,
+} from 'rxjs';
 import { BuscaService } from 'src/app/conteudo/service/busca.service';
 import { DadoToken } from '../../conteudo/model/dadoToken';
 import { LoginService } from '../../conteudo/service/login.service';
@@ -22,8 +31,9 @@ export class CabecalhoComponent implements OnInit {
   faCarrinho = faShoppingCart;
   logado: boolean = false;
   nomeLogado!: string;
-  busca!: string;
+  busca = new FormControl();
   tokenDecodificado!: DadoToken;
+  mensagemErro = '';
   public isCollapsed = false;
 
   constructor(
@@ -31,6 +41,25 @@ export class CabecalhoComponent implements OnInit {
     private loginService: LoginService,
     private buscaService: BuscaService
   ) {}
+
+  fazerBusca$ = this.busca.valueChanges.pipe(
+    filter((valorDigitado) => valorDigitado.length >= 3),
+    debounceTime(300),
+    switchMap((valorDigitado) => {
+      this.buscaService.setBusca(valorDigitado, this.router);
+      return valorDigitado;
+    }),
+    catchError((erro) => {
+      console.log(erro);
+      return throwError(
+        () =>
+          new Error(
+            (this.mensagemErro =
+              'Ops, ocorreu um erro. Recarregue a aplicação!')
+          )
+      );
+    })
+  );
 
   ngOnInit(): void {
     this.loginService.nome.subscribe((token) => {
@@ -42,7 +71,7 @@ export class CabecalhoComponent implements OnInit {
         this.logado = false;
       }
     });
-    console.log(this.loginService.getToken());
+    this.fazerBusca$.subscribe();
   }
 
   public carregarTela(tela: string) {
@@ -52,10 +81,5 @@ export class CabecalhoComponent implements OnInit {
   acaoBotaoSair() {
     this.loginService.resetToken();
     this.loginService.setNome(new DadoToken());
-  }
-
-  realizarBusca(busca: string) {
-    // this.router.navigate(['/conteudo/buscaProduto'], { state: { busca } });
-    this.buscaService.setBusca(this.busca, this.router);
   }
 }
