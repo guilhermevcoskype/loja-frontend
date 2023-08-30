@@ -52,12 +52,10 @@ export class LoginComponent implements OnInit {
     if (this.formulario.valid) {
       this.usuarioService.logar(this.formulario.value).subscribe({
         next: (retorno) => {
-          console.log(retorno);
           this.loginService.setToken(retorno);
           const tokenDecodificado = this.jwtHelper.decodeToken(JSON.stringify(retorno));
           if(tokenDecodificado){
-            console.log(tokenDecodificado);
-            this.loginService.setNome(tokenDecodificado);
+            this.loginService.setTokenDecodificado(tokenDecodificado);
             this.router.navigate(["/conteudo/uLancamentos"]);
           }
         },

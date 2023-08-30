@@ -1,9 +1,7 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable, take } from 'rxjs';
 import { Usuario } from '../model/usuario';
-import { Token } from '@angular/compiler';
-import { DadoToken } from '../model/dadoToken';
 
 @Injectable({
   providedIn: 'root',

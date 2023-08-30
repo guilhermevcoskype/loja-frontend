@@ -1,8 +1,7 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Produto } from 'src/app/conteudo/model/produto';
-import { Page } from 'ngx-pagination';
 
 @Injectable({
   providedIn: 'root',
@@ -37,5 +36,16 @@ export class ProdutoService {
 
   buscarProdutoPorCodigo(codigo: number): Observable<Produto> {
     return this.httpClient.get<Produto>(this.API+'/'+codigo);
+  }
+
+  buscarTiposProduto(): Observable<any>{
+    return this.httpClient.get(this.API+'/tipoProduto');
+  }
+
+  buscarProdutoPorTipo(tipoProduto: string, page: number): Observable<any>{
+    const params = new HttpParams()
+      .set('tipoProduto', tipoProduto)
+      .set('page', page-1)
+    return this.httpClient.get<any>(this.API+'/buscarProdutoPorTipo', { params });
   }
 }

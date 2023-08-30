@@ -6,51 +6,80 @@ import { ProdutoService } from './produto.service';
   providedIn: 'root',
 })
 export class CarrinhoService {
-  mapItens = new Map<CarrinhoItem, number>();
+  carrinhoItens: CarrinhoItem[] = [];
 
-  constructor(private produtoService: ProdutoService) {}
+  constructor(private produtoService: ProdutoService) {
+    const dados = sessionStorage.getItem('itens');
+    if (dados !== null) {
+      const objetos = JSON.parse(dados);
+      this.carrinhoItens = objetos.map((obj: any) =>
+        CarrinhoItem.fromObject(obj)
+      );
+    }
+  }
 
   getQuantidadeItem(item: CarrinhoItem) {
-    if (!this.mapItens.has(item)) {
-      return 0;
+    const index = this.verificarExistencia(item);
+    if (index > -1) {
+      return this.carrinhoItens.find(
+        (itemProcurado) => itemProcurado.produto.id === item.produto.id
+      )?.quantidade;
     }
-    return this.mapItens.get(item);
+    return 0;
   }
 
   getQuantidadeTotal(): number {
     let total = 0;
-    for (const quantidade of this.mapItens.values()) {
-      total += quantidade;
-    }
+    this.carrinhoItens.forEach((item) => (total += item.quantidade));
     return total;
   }
 
   getPrecoTotal() {
     let total = 0;
-    for (const item of this.mapItens.keys()) {
+    this.carrinhoItens.forEach((item) => {
       total += item.getPrecoTotal(this.getQuantidadeItem(item));
-    }
+    });
     return total;
   }
 
   aumentarQuantidadeItem(item: CarrinhoItem) {
-    console.log(this.mapItens.has(item));
-    if (this.mapItens.has(item)) {
-      const quantidadeAtual = this.mapItens.get(item);
-      this.removerItem(item);
-      this.mapItens.set(item, quantidadeAtual! + 1);
-    } else this.mapItens.set(item, this.getQuantidadeItem(item)! + 1);
+    const index = this.verificarExistencia(item);
+    if (index > -1) {
+      const itemAtual = this.carrinhoItens[this.carrinhoItens.indexOf(item)];
+      itemAtual?.setQuantidade(itemAtual.quantidade + 1);
+      this.carrinhoItens[this.carrinhoItens.indexOf(item)] = itemAtual;
+    } else {
+      item.setQuantidade(item.quantidade + 1);
+      this.carrinhoItens.push(item);
+    }
+    this.armazenarDados();
   }
 
   diminuirQuantidadeItem(item: CarrinhoItem) {
-    if (this.mapItens.has(item)) {
-      this.mapItens.set(item, this.getQuantidadeItem(item)! - 1);
-    }
+    const index = this.verificarExistencia(item);
+    if (index > -1) {
+      const itemAtual = this.carrinhoItens[this.carrinhoItens.indexOf(item)];
+      itemAtual?.setQuantidade(itemAtual.quantidade - 1);
+      this.carrinhoItens[this.carrinhoItens.indexOf(item)] = itemAtual;
+    } else this.removerItem(item);
+    this.armazenarDados();
   }
 
   removerItem(item: CarrinhoItem) {
-    if (this.mapItens.has(item)) {
-      this.mapItens.delete(item);
+    const index = this.verificarExistencia(item);
+    if (index > -1) {
+      this.carrinhoItens.splice(this.carrinhoItens.indexOf(item), 1);
     }
+    this.armazenarDados();
+  }
+
+  verificarExistencia(item: CarrinhoItem): number {
+    return this.carrinhoItens.findIndex(
+      (itemProcurado) => itemProcurado.produto.id === item.produto.id
+    );
+  }
+
+  private armazenarDados() {
+    sessionStorage.setItem('itens', JSON.stringify(this.carrinhoItens));
   }
 }

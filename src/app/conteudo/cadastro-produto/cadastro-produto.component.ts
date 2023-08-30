@@ -107,7 +107,6 @@ export class CadastroProdutoComponent implements OnInit {
       });
       this.produtoService.salvarProduto(this.formData).subscribe({
         next: (response) => {
-          console.log(response);
           this.openModal("Cadastrado com sucesso");
         },
         error: (erro) => {

@@ -47,7 +47,6 @@ export class CadastroUsuarioComponent implements OnInit {
     if (this.formulario.valid) {
       this.usuarioService.cadastrarUsuario(this.formulario.value).subscribe({
         next: (response) => {
-          console.log(response);
           this.openModal('Cadastrado com sucesso!');
         },
         error: (erro) => {

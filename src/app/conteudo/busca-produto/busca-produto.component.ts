@@ -12,7 +12,7 @@ import { BuscaService } from '../service/busca.service';
   styleUrls: ['./busca-produto.component.css'],
 })
 export class BuscaProdutoComponent implements OnInit {
-  listProdutos!: Produto[];
+  listProdutos: Produto[] = [];
   busca: string = '';
   private modalService!: NgbModal;
 
@@ -39,7 +39,20 @@ export class BuscaProdutoComponent implements OnInit {
         this.itemsPerPage = page.size;
       },
       error: (erro) => {
-        this.openModal('Ocorreu um erro ao realizar a busca, tente novamente.');
+        console.log(erro);
+      },
+    });
+  }
+
+  buscarPorTipoProduto() {
+    this.produtoService.buscarProdutoPorTipo(this.busca, this.paginaAtual).subscribe({
+      next: (page) => {
+        this.listProdutos = page.content;
+        this.totalProdutos = page.totalElements;
+        this.itemsPerPage = page.size;
+      },
+      error: (erro) => {
+        console.log(erro);
       },
     });
   }
@@ -57,7 +70,11 @@ export class BuscaProdutoComponent implements OnInit {
   ngOnInit(): void {
     this.buscaService.busca.subscribe({
       next: (response) => {this.busca = response; this.buscarProduto()},
-      error: (error) => {console.log('ocorreu um erro')}
+      error: (error) => {console.log(error)}
+    });
+    this.buscaService.buscaTipoProduto.subscribe({
+      next: (response) => {this.busca = response; this.buscarPorTipoProduto()},
+      error: (error) => {console.log(error)}
     });
     this.buscarProduto();
   }

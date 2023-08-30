@@ -32,7 +32,7 @@ export class ProdutosComponent {
   }
 
   addCarrinho(){
-    this.carrinhoService.aumentarQuantidadeItem(new CarrinhoItem(this.produto));
+    this.carrinhoService.aumentarQuantidadeItem(new CarrinhoItem(this.produto, 0));
     this.router.navigate(['/conteudo/carrinho']);
   }
 }

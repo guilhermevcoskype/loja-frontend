@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
   faBars,
-  faHeart,
+  /* faHeart, */
   faSearch,
   faShoppingCart,
 } from '@fortawesome/free-solid-svg-icons';
@@ -18,6 +18,7 @@ import {
 import { BuscaService } from 'src/app/conteudo/service/busca.service';
 import { DadoToken } from '../../conteudo/model/dadoToken';
 import { LoginService } from '../../conteudo/service/login.service';
+import { ProdutoService } from 'src/app/conteudo/service/produto.service';
 
 @Component({
   selector: 'app-cabecalho',
@@ -27,7 +28,7 @@ import { LoginService } from '../../conteudo/service/login.service';
 export class CabecalhoComponent implements OnInit {
   faBusca = faSearch;
   faBarras = faBars;
-  faCoracao = faHeart;
+  // faCoracao = faHeart;
   faCarrinho = faShoppingCart;
   logado: boolean = false;
   nomeLogado!: string;
@@ -35,11 +36,13 @@ export class CabecalhoComponent implements OnInit {
   tokenDecodificado!: DadoToken;
   mensagemErro = '';
   public isCollapsed = false;
+  tipoProdutos: string[] = [];
 
   constructor(
     private router: Router,
     private loginService: LoginService,
-    private buscaService: BuscaService
+    private buscaService: BuscaService,
+    private produtoService: ProdutoService
   ) {}
 
   fazerBusca$ = this.busca.valueChanges.pipe(
@@ -62,16 +65,21 @@ export class CabecalhoComponent implements OnInit {
   );
 
   ngOnInit(): void {
-    this.loginService.nome.subscribe((token) => {
+    this.loginService.tokenDecodificado$.subscribe((token) => {
       this.tokenDecodificado = token;
       if (token.sub != '') {
         this.logado = true;
-        this.nomeLogado = token.sub;
       } else {
         this.logado = false;
       }
     });
     this.fazerBusca$.subscribe();
+    this.produtoService.buscarTiposProduto().subscribe(
+      {
+        next: resultado => {this.tipoProdutos = resultado},
+        error: erro => console.log(erro)
+      }
+    );
   }
 
   public carregarTela(tela: string) {
@@ -80,6 +88,11 @@ export class CabecalhoComponent implements OnInit {
 
   acaoBotaoSair() {
     this.loginService.resetToken();
-    this.loginService.setNome(new DadoToken());
+    this.loginService.setTokenDecodificado(new DadoToken());
   }
+
+  buscarTipoProduto(tipoProduto: string){
+    this.buscaService.setBuscaPorTipo(tipoProduto, this.router);
+  }
+
 }

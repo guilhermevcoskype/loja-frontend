@@ -7,26 +7,51 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class LoginService {
   private token!: string;
-  private nomeSource = new BehaviorSubject<DadoToken>(new DadoToken());
-  nome = this.nomeSource.asObservable();
+  private dadosTokenSource = new BehaviorSubject<DadoToken>(new DadoToken());
+  tokenDecodificado$ = this.dadosTokenSource.asObservable();
+  tokenDecodificado?: DadoToken;
+
+  constructor() {
+    this.recuperarToken();
+    this.recuperarTokenDecodificado();
+
+  }
 
   setToken(token: string) {
     this.token = token;
+    sessionStorage.setItem('token', this.token);
   }
 
   resetToken() {
     this.token = '';
+    sessionStorage.setItem('token', this.token);
   }
 
   getToken() {
     return this.token;
   }
 
-  setNome(nome: DadoToken) {
-    this.nomeSource.next(nome);
+  setTokenDecodificado(dadoToken: DadoToken) {
+    this.dadosTokenSource.next(dadoToken);
+    this.tokenDecodificado = dadoToken;
+    sessionStorage.setItem(
+      'tokenDecodificado',
+      JSON.stringify(this.tokenDecodificado)
+    );
   }
 
-  getNome() {
-    return this.nome;
+  recuperarToken(){
+    const token = sessionStorage.getItem('token');
+    if (token !== null) {
+      this.token = token;
+    }
+  }
+
+  recuperarTokenDecodificado(){
+    const tokenDecodificado = sessionStorage.getItem('tokenDecodificado');
+    if (tokenDecodificado !== null) {
+      this.tokenDecodificado = JSON.parse(tokenDecodificado);
+      this.dadosTokenSource.next(this.tokenDecodificado!);
+    }
   }
 }

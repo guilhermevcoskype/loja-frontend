@@ -1,6 +1,6 @@
 <main class="container">
   <h1 class="mt-4 titulos">Carrinho</h1>
-  <table *ngIf="carrinho.mapItens != null && carrinho.getQuantidadeTotal() != 0; else carrinhoCheio"
+  <table *ngIf="carrinho.carrinhoItens != null && carrinho.getQuantidadeTotal() != 0; else carrinhoVazio"
     class="container mt-5 mb-5 table-striped">
     <thead>
       <tr class="tamanho-linha-carrinho border ml-1">
@@ -13,32 +13,25 @@
     </thead>
     <tbody>
       <tr class="tamanho-linha-carrinho border ml-1" *ngFor="let carrinhoItem of mapItensKeys">
-        <th scope="row" class="  text-center"><img class="card-largura card-img-top card-posicao-imagem" src={{carrinhoItem.produto.urlImagem}}>
+        <th scope="row" class="  text-center"><img class="card-largura card-img-top card-posicao-imagem"
+            src={{carrinhoItem.produto.urlImagem}}>
         </th>
         <td class="  text-center">{{carrinhoItem.produto.descricao}}</td>
         <td class="  text-center">
           <div class="btn-group inline" role="group">
-            <!-- <form action="#" th:action="@{/carrinho/diminuir}">
-              <input type="hidden" th:value="${carrinhoItem.produto.codigo}" name="codigo">-->
-            <button title="diminuir" class="btn btn-lihgt border" (click)="diminuirQuantidadeItem(carrinhoItem)">-</button>
-            <!-- </form> -->
+            <button title="diminuir" class="btn btn-lihgt border"
+              (click)="diminuirQuantidadeItem(carrinhoItem)">-</button>
             <button type="text" title="quantidade" class="btn "
               disabled>{{carrinho.getQuantidadeItem(carrinhoItem)}}</button>
-            <!-- <form action="#" th:action="@{/carrinho/aumentar}">
-              <input type="hidden" th:value="${carrinhoItem.produto.codigo}" name="codigo">-->
-            <button title="aumentar" class="btn btn-lihgt border" (click)="aumentarQuantidadeItem(carrinhoItem)">+</button>
-            <!-- </form> -->
+            <button title="aumentar" class="btn btn-lihgt border"
+              (click)="aumentarQuantidadeItem(carrinhoItem)">+</button>
           </div>
-        <td class="  text-center">{{carrinhoItem.getPrecoTotal(carrinho.getQuantidadeItem(carrinhoItem)) | currency: 'BRL'}}
-          <!-- <span
-            th:text="${carrinhoItem.getTotalFormatado(carrinho.getQuantidade(carrinhoItem))}"></span> -->
+        <td class="  text-center">
+          {{carrinhoItem.getPrecoTotal(carrinho.getQuantidadeItem(carrinhoItem)) | currency: 'BRL'}}
 
         </td>
         <td class="  text-center">
-          <!-- <form action="#" th:action="@{/carrinho/remover}">
-            <input type="hidden" th:value="${carrinhoItem.produto.codigo}" name="codigo">-->
           <button title="remover" class="btn btn-dark" (click)="removerItem(carrinhoItem)">remover</button>
-          <!-- </form> -->
         </td>
       </tr>
     </tbody>
@@ -49,14 +42,12 @@
         <td class="  text-center">{{carrinho.getQuantidadeTotal()}}</td>
         <td class="  text-center">{{carrinho.getPrecoTotal() | currency: 'BRL'}}</td>
         <td class="  text-right pr-1">
-          <!-- <form action="#" th:action="@{/pagamento}" method="post"> -->
-          <button title="finalizar" class="btn btn-dark">Finalizar</button>
-          <!-- </form> -->
+          <button title="finalizar" class="btn btn-dark" (click)="finalizar()">Finalizar</button>
         </td>
       </tr>
     </tfoot>
   </table>
-  <ng-template #carrinhoCheio>
+  <ng-template #carrinhoVazio>
     <h3 class="text-center titulos">Seu carrinho está vazio</h3>
   </ng-template>
 </main>
