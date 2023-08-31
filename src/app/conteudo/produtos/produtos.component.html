@@ -1,6 +1,6 @@
 <div class="card card-borda  p-0 m-3">
 	<img
-    [src]="produto.urlImagem | defaultImage"
+    [src]="produto.urlImagem" onError="this.src='../../../assets/imagens/produto sem imagem.png'"
     class="card-img-top card-posicao-imagem"
     [alt]="produto.descricao">
 	<div class="card-body">

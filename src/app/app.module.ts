@@ -10,6 +10,8 @@ import { AppComponent } from './app.component';
 import { CabecalhoComponent } from './cabecalho/cabecalho/cabecalho.component';
 import { RodapeComponent } from './rodape/rodape.component';
 import { JwtModule } from "@auth0/angular-jwt";
+import { CurrencyMaskModule } from 'ng2-currency-mask';
+
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { JwtModule } from "@auth0/angular-jwt";
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    CurrencyMaskModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => localStorage.getItem('access_token')

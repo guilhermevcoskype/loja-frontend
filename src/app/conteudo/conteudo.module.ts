@@ -12,6 +12,7 @@ import { CadastroProdutoComponent } from './cadastro-produto/cadastro-produto.co
 import { BuscaProdutoComponent } from './busca-produto/busca-produto.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CarrinhoComponent } from './carrinho/carrinho.component';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { CarrinhoComponent } from './carrinho/carrinho.component';
     SharedModule,
     ReactiveFormsModule,
     FormsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    CurrencyMaskModule
   ],
   providers: [CurrencyPipe]
 })

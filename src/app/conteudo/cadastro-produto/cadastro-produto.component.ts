@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
+import { FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Produto } from '../model/produto';
@@ -20,6 +20,7 @@ export class CadastroProdutoComponent implements OnInit {
   produto: Produto = new Produto();
   formData: FormData = new FormData();
   selectedOption: string = 'arquivo';
+  formControlExample = new FormControl(20);
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
   constructor(
@@ -40,11 +41,11 @@ export class CadastroProdutoComponent implements OnInit {
       ],
 
       estoque: [
-        0,
-        Validators.compose([Validators.required, Validators.min(1), Validators.pattern('\d*')]),
+
+        Validators.compose([Validators.required, Validators.min(1), Validators.max(1000), Validators.pattern('^[0-9]*$')]),
       ],
 
-      preco: [0, Validators.compose([Validators.required, Validators.min(1), Validators.pattern('^\d+(\.\d{2})?$')])],
+      preco: ['',Validators.compose([Validators.required, Validators.min(1),Validators.pattern(/^-?\d+(\.\d+)?$/)])],
 
       dataInsercao: [new Date()],
 

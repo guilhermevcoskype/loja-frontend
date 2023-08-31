@@ -1,9 +1,23 @@
-.imagem-div {
-  object-fit: cover;
+html, body {
+  height: 100%;
 }
 
-button :hover {
-  text-decoration: solid;
+button:hover {
+  transform: scale(1.1);
+  font-weight: bold;
+}
+
+a:hover {
+  transform: scale(1.1);
+  font-weight: bold;
+}
+
+.dropdown-menu {
+  position: absolute;
+  z-index: 1000;
+}
+.imagem-div {
+  object-fit: cover;
 }
 
 .card-largura {
@@ -44,7 +58,7 @@ button :hover {
 	font-family: 'Varela Round', sans-serif;
 }
 
-.link-comprar: hover {
+.link-comprar:hover {
 	color: white;
 	height: 3rem;
 }
@@ -96,7 +110,4 @@ button :hover {
 
 #login  #login-row #login-column #login-box #login-form {
 	padding: 20px;
-}
-html, body {
-  height: 100%;
 }
