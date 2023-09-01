@@ -2,17 +2,11 @@
     <img class="container mt-3" src="../../../assets/imagens/banner-loja.png" alt="banner principal da loja">
   </div>
 
-  <div class="container-fluid">
+  <div class="container-fluid" *ngIf="listProdutos.length > 0;else semProdutos">
 
-    <div class="container mt-5" *ngIf="listProdutos.length > 0;else semProdutos">
-      <h3 class="text-center titulos">Ultimos lançamentos</h3>
+    <div class="container text-center mt-3">
+      <h1>Ultimos lançamentos</h1>
     </div>
-    <ng-template #semProdutos>
-      <div class="container mt-5">
-        <h3 class="text-center titulos">Sem produtos disponíveis</h3>
-      </div>
-    </ng-template>
-
     <div class="container mb-3">
       <div class="row justify-content-center card-text text-info">
         <app-produtos
@@ -24,3 +18,8 @@
       </div>
     </div>
   </div>
+  <ng-template #semProdutos>
+    <div class="container mt-3">
+      <h1>Sem produtos disponíveis</h1>
+    </div>
+  </ng-template>

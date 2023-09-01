@@ -53,27 +53,28 @@ export class CarrinhoComponent implements OnInit, OnDestroy {
           .pagarCompra(this.carrinho.getPrecoTotal())
           .subscribe({
             next: (resposta) => {
-              this.openModal(resposta);
+              this.openModal(resposta, "Pagamento");
               this.carrinho.carrinhoItens = [];
               this.mapItensKeys = this.carrinho.carrinhoItens;
             },
             error: (erro) => {
               console.log(erro);
               this.openModal(
-                'Houve um erro no pagamento, favor tentar mais tarde.'
+                "Houve um erro no pagamento, favor tentar mais tarde.", "Erro"
               );
             },
           });
       } else {
-        this.openModal('Ocorreu um erro, favor contatar o dev');
+        this.openModal("Ocorreu um erro, favor contatar o dev", "Erro");
       }
     }else{
-      this.openModal('Você precisa estar logado para finalizar a compra.');
+      this.openModal("Você precisa estar logado para finalizar a compra.", "Erro");
     }
   }
 
-  openModal(message: string) {
+  openModal(message: string, titulo: string) {
     const modalRef = this.modalService.open(MessageModalComponent);
     modalRef.componentInstance.message = message;
+    modalRef.componentInstance.titulo = titulo;
   }
 }

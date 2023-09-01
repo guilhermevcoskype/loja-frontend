@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
@@ -8,6 +8,7 @@ import {
   faShoppingCart,
 } from '@fortawesome/free-solid-svg-icons';
 import {
+  Subscription,
   catchError,
   debounceTime,
   filter,
@@ -25,7 +26,7 @@ import { ProdutoService } from 'src/app/conteudo/service/produto.service';
   templateUrl: './cabecalho.component.html',
   styleUrls: ['./cabecalho.component.css'],
 })
-export class CabecalhoComponent implements OnInit {
+export class CabecalhoComponent implements OnInit, OnDestroy {
   faBusca = faSearch;
   faBarras = faBars;
   // faCoracao = faHeart;
@@ -37,6 +38,9 @@ export class CabecalhoComponent implements OnInit {
   mensagemErro = '';
   public isCollapsed = false;
   tipoProdutos: string[] = [];
+  loginSubscription!: Subscription;
+  buscaSubscription!: Subscription;
+  produtoSubscription!: Subscription;
 
   constructor(
     private router: Router,
@@ -65,7 +69,7 @@ export class CabecalhoComponent implements OnInit {
   );
 
   ngOnInit(): void {
-    this.loginService.tokenDecodificado$.subscribe((token) => {
+    this.loginSubscription = this.loginService.tokenDecodificado$.subscribe((token) => {
       this.tokenDecodificado = token;
       if (token.sub != '') {
         this.logado = true;
@@ -73,13 +77,19 @@ export class CabecalhoComponent implements OnInit {
         this.logado = false;
       }
     });
-    this.fazerBusca$.subscribe();
-    this.produtoService.buscarTiposProduto().subscribe(
-      {
-        next: resultado => {this.tipoProdutos = resultado},
-        error: erro => console.log(erro)
-      }
-    );
+    this.buscaSubscription = this.fazerBusca$.subscribe();
+    this.produtoSubscription = this.produtoService.buscarTiposProduto().subscribe({
+      next: (resultado) => {
+        this.tipoProdutos = resultado;
+      },
+      error: (erro) => console.log(erro),
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.buscaSubscription.unsubscribe();
+    this.produtoSubscription.unsubscribe();
+    this.loginSubscription.unsubscribe();
   }
 
   public carregarTela(tela: string) {
@@ -91,8 +101,7 @@ export class CabecalhoComponent implements OnInit {
     this.loginService.setTokenDecodificado(new DadoToken());
   }
 
-  buscarTipoProduto(tipoProduto: string){
+  buscarTipoProduto(tipoProduto: string) {
     this.buscaService.setBuscaPorTipo(tipoProduto, this.router);
   }
-
 }

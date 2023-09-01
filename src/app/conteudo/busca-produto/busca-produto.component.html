@@ -1,4 +1,7 @@
 <div class="container mb-3">
+  <div class="container text-center mt-3">
+    <h1>Buscando: {{busca?busca.toLowerCase():busca}}</h1>
+  </div>
   <div class="row justify-content-center card-text text-info" *ngIf="listProdutos.length > 0; else listaVazia">
     <app-produtos
       *ngFor="let produto of listProdutos | paginate: { currentPage: paginaAtual, itemsPerPage: itemsPerPage, totalItems: totalProdutos } let i = index"

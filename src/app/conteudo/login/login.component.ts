@@ -1,21 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subscription } from 'rxjs';
 import { MessageModalComponent } from 'src/app/shared/componentes/message-modal/message-modal.component';
-import { Usuario } from '../model/usuario';
 import { LoginService } from '../service/login.service';
 import { UsuarioService } from '../service/usuario.service';
-import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
-import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   formulario!: FormGroup;
+  usuarioSubscription!: Subscription;
 
   constructor(
     private router: Router,
@@ -29,7 +30,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.formulario = this.formBuilder.group({
       nome: [
-        '',
+        "",
         Validators.compose([
           Validators.maxLength(100),
           Validators.required,
@@ -37,20 +38,20 @@ export class LoginComponent implements OnInit {
         ]),
       ],
       senha: [
-        '',
+        "",
         Validators.compose([
           Validators.maxLength(200),
           Validators.required,
           Validators.minLength(3),
         ]),
       ],
-      roles: ['ROLE_USER'],
+      roles: ["ROLE_USER"],
     });
   }
 
   onSubmit() {
     if (this.formulario.valid) {
-      this.usuarioService.logar(this.formulario.value).subscribe({
+      this.usuarioSubscription = this.usuarioService.logar(this.formulario.value).subscribe({
         next: (retorno) => {
           this.loginService.setToken(retorno);
           const tokenDecodificado = this.jwtHelper.decodeToken(JSON.stringify(retorno));
@@ -62,23 +63,28 @@ export class LoginComponent implements OnInit {
         error: (error: HttpErrorResponse) => {
           console.log(error);
           if (error.status == HttpStatusCode.Unauthorized) {
-            this.openModal('Login inválido. Favor tentar novamente.');
+            this.openModal("Login inválido. Favor tentar novamente.", "Erro");
           } else if (error.status == HttpStatusCode.BadRequest) {
             this.openModal(
-              'Ocorreu um erro na requisição, favor contatar o dev.'
+              "Ocorreu um erro na requisição, favor contatar o dev.", "Erro"
             );
-          } else this.openModal('Ocorreu um erro. Tente novamente.');
+          } else this.openModal("Ocorreu um erro. Tente novamente.", "Erro");
         },
       });
     }
   }
 
-  public carregarTelaRegistrar() {
-    this.router.navigate(['/conteudo/cadastroUsuario']);
+  ngOnDestroy(): void {
+    if (this.usuarioSubscription) this.usuarioSubscription.unsubscribe();
   }
 
-  openModal(message: string) {
+  public carregarTelaRegistrar() {
+    this.router.navigate(["/conteudo/cadastroUsuario"]);
+  }
+
+  openModal(message: string, titulo: string) {
     const modalRef = this.modalService.open(MessageModalComponent);
     modalRef.componentInstance.message = message;
+    modalRef.componentInstance.titulo = titulo;
   }
 }

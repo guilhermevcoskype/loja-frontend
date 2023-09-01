@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { Produto } from 'src/app/conteudo/model/produto';
-import { CarrinhoService } from '../service/carrinho.service';
 import { CarrinhoItem } from '../model/carrinhoItem';
-import { ActivatedRoute, Router } from '@angular/router';
+import { CarrinhoService } from '../service/carrinho.service';
 
 @Component({
   selector: 'app-produtos',

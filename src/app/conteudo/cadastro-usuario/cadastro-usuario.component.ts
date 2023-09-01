@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -6,14 +6,16 @@ import { Usuario } from '../model/usuario';
 import { UsuarioService } from '../service/usuario.service';
 import { MessageModalComponent } from 'src/app/shared/componentes/message-modal/message-modal.component';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-cadastro-usuario',
   templateUrl: './cadastro-usuario.component.html',
   styleUrls: ['./cadastro-usuario.component.css'],
 })
-export class CadastroUsuarioComponent implements OnInit {
+export class CadastroUsuarioComponent implements OnInit, OnDestroy {
   formulario!: FormGroup;
+  usuarioSubscription!: Subscription;
 
   constructor(
     private router: Router,
@@ -21,6 +23,7 @@ export class CadastroUsuarioComponent implements OnInit {
     private usuarioService: UsuarioService,
     private modalService: NgbModal
   ) {}
+
   ngOnInit(): void {
     this.formulario = this.formBuilder.group({
       nome: [
@@ -45,27 +48,34 @@ export class CadastroUsuarioComponent implements OnInit {
 
   enviar() {
     if (this.formulario.valid) {
-      this.usuarioService.cadastrarUsuario(this.formulario.value).subscribe({
-        next: (response) => {
-          this.openModal('Cadastrado com sucesso!');
-        },
-        error: (erro) => {
-          console.log(erro);
-          this.openModal('Ocorreu um erro, favor contatar o dev.');
-        },
-      });
+      this.usuarioSubscription = this.usuarioService
+        .cadastrarUsuario(this.formulario.value)
+        .subscribe({
+          next: (response) => {
+            this.openModal('Cadastrado com sucesso!', "Sucesso");
+          },
+          error: (erro) => {
+            console.log(erro);
+            this.openModal('Ocorreu um erro, favor contatar o dev.', "Erro");
+          },
+        });
     }
     this.formulario.reset();
   }
 
-  openModal(message: string) {
-    const modalRef = this.modalService.open(MessageModalComponent);
-    modalRef.componentInstance.message = message;
+  ngOnDestroy(): void {
+    if (this.usuarioSubscription) this.usuarioSubscription.unsubscribe();
   }
 
-  habilitarBotao(){
-    if(this.formulario.valid){
-      return "btn btn-primary"
-    }else return "btn btn-secondary"
+  openModal(message: string, titulo: string) {
+    const modalRef = this.modalService.open(MessageModalComponent);
+    modalRef.componentInstance.message = message;
+    modalRef.componentInstance.titulo = titulo;
+  }
+
+  habilitarBotao() {
+    if (this.formulario.valid) {
+      return 'btn btn-primary';
+    } else return 'btn btn-secondary';
   }
 }

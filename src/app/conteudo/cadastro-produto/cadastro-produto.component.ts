@@ -108,24 +108,25 @@ export class CadastroProdutoComponent implements OnInit {
       });
       this.produtoService.salvarProduto(this.formData).subscribe({
         next: (response) => {
-          this.openModal("Cadastrado com sucesso");
+          this.openModal("Cadastrado com sucesso", "Sucesso");
         },
         error: (erro) => {
           console.log(erro);
-          this.openModal("Ocorreu um erro, favor contactar o dev.")
+          this.openModal("Ocorreu um erro, favor contactar o dev.", "Erro")
         },
       });
       this.formData = new FormData();
       this.formulario.reset();
     }else{
-      this.openModal("Há algum campo errado: "+this.formulario.errors)
+      this.openModal("Há algum campo errado: "+this.formulario.errors, "Erro")
 
     }
   }
 
-  openModal(message: string) {
+  openModal(message: string, titulo: string) {
     const modalRef = this.modalService.open(MessageModalComponent);
     modalRef.componentInstance.message = message;
+    modalRef.componentInstance.titulo = titulo;
   }
 
 }

@@ -1,5 +1,7 @@
 <main class="container">
-  <h1 class="mt-4 titulos">Carrinho</h1>
+  <div class="container text-center mt-3">
+    <h1>Carrinho</h1>
+  </div>
   <table *ngIf="carrinho.carrinhoItens != null && carrinho.getQuantidadeTotal() != 0; else carrinhoVazio"
     class="container mt-5 mb-5 table-striped">
     <thead>
