@@ -1,5 +1,5 @@
-<div class="text-uppercase">
-  <nav class="navbar navbar-expand-lg navbar-light bg-dark fixed-tops">
+<section class="text-uppercase">
+  <nav class="navbar navbar-expand-lg navbar-light bg-dark fixed-tops zindex">
     <div class="container mx-auto">
       <a class="navbar-brand" routerLink="/"> <img src="../../../assets/imagens/logo-loja.png" alt="Logo loja genérica">
       </a>
@@ -13,7 +13,7 @@
           <div class="col px-0 left-input-busca bg-white"></div>
           <input class="col-10 m-0 search_input px-0" placeholder="O que você está buscando?" [formControl]="busca"
             aria-label="Search">
-          <button class="col-1 search_icon px-0 bg-white" disabled>
+          <button class="col-1 search_icon px-0 bg-white nohover" disabled>
             <fa-icon [icon]="faBusca" class="fas fa-search text-info"></fa-icon>
           </button>
         </div>
@@ -29,7 +29,7 @@
 
         <ng-template #usuarioLogado>
           <div class="btn text-white" (mouseover)="isCollapsed = true" (mouseout)="isCollapsed = false"
-          (click)="isCollapsed = ! isCollapsed" [attr.aria-expanded]="!isCollapsed">{{ tokenDecodificado.sub }}
+            (click)="isCollapsed = ! isCollapsed" [attr.aria-expanded]="!isCollapsed">{{ tokenDecodificado.sub }}
             <div #collapse="ngbCollapse" [(ngbCollapse)]="!isCollapsed">
               <ul class="navbar-nav flex-column">
                 <li *ngIf="tokenDecodificado && tokenDecodificado.roles == 'ROLE_ADMIN'"><a
@@ -50,7 +50,7 @@
     </div>
   </nav>
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-tops">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-tops zindex">
     <div class="container mx-auto">
       <p class="navbar-brand">A maior loja do <span class="text-info">Brasil</span></p>
       <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarNavAltMarkup"
@@ -66,4 +66,4 @@
     </div>
   </nav>
 
-</div>
+</section>

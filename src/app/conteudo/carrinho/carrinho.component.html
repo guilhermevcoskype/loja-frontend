@@ -16,7 +16,7 @@
     <tbody>
       <tr class="tamanho-linha-carrinho border ml-1" *ngFor="let carrinhoItem of mapItensKeys">
         <th scope="row" class="  text-center"><img class="card-largura card-img-top card-posicao-imagem"
-            src={{carrinhoItem.produto.urlImagem}}>
+            src={{carrinhoItem.produto.urlImagem}} onError="this.src='../../../assets/imagens/produto sem imagem.png'">
         </th>
         <td class="  text-center">{{carrinhoItem.produto.descricao}}</td>
         <td class="  text-center">

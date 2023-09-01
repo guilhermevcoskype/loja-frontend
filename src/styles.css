@@ -12,6 +12,15 @@ a:hover {
   font-weight: bold;
 }
 
+.nohover:hover {
+  transform: initial;
+  font-weight: initial;
+}
+
+.zindex {
+  z-index: 2000;
+}
+
 .dropdown-menu {
   position: absolute;
   z-index: 2000;
@@ -68,7 +77,6 @@ h1 {
 	height: 75px;
 }
 
-/* searchbar Style */
 .search_input {
 	outline: 0;
 	border: none;
