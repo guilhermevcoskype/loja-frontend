@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs';
 import { MessageModalComponent } from 'src/app/shared/componentes/message-modal/message-modal.component';
 import { LoginService } from '../service/login.service';
 import { UsuarioService } from '../service/usuario.service';
+import { RequestToken } from '../model/requestToken';
 
 @Component({
   selector: 'app-login',
@@ -52,8 +53,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   onSubmit() {
     if (this.formulario.valid) {
       this.usuarioSubscription = this.usuarioService.logar(this.formulario.value).subscribe({
-        next: (retorno) => {
-          this.loginService.setToken(retorno);
+        next: (retorno: RequestToken) => {
+          this.loginService.setToken(retorno.token);
           const tokenDecodificado = this.jwtHelper.decodeToken(JSON.stringify(retorno));
           if(tokenDecodificado){
             this.loginService.setTokenDecodificado(tokenDecodificado);

@@ -1,0 +1,24 @@
+.zindex {
+  z-index: 1000;
+}
+
+.search_input {
+	outline: 0;
+	border: none;
+}
+
+.left-input-busca {
+	border: none;
+	border-top-left-radius: 50%;
+	border-bottom-left-radius: 50%;
+	height: 40px;
+}
+
+.search_icon {
+	justify-content: center;
+	align-items: center;
+	border: none;
+	text-decoration: none;
+	border-top-right-radius: 50%;
+	border-bottom-right-radius: 50%;
+}

@@ -1,7 +1,8 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Produto } from 'src/app/conteudo/model/produto';
+import { LoginService } from './login.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,8 @@ import { Produto } from 'src/app/conteudo/model/produto';
 export class ProdutoService {
   private readonly API: string = 'http://localhost:8080/produtos';
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient,
+    private loginService: LoginService) {}
 
   getListProdutos(page: number): Observable<any> {
     const params = new HttpParams()
@@ -19,11 +21,11 @@ export class ProdutoService {
   }
 
   salvarProduto(formData: FormData): Observable<Produto> {
+    const headers = new HttpHeaders().set("Authorization", "Bearer "+ this.loginService.getToken());
     if (!formData.has('file')) {
       formData.append('file', new Blob());
     }
-    return this.httpClient
-      .post(this.API, formData)
+    return this.httpClient.post(this.API, formData, {headers})
       .pipe((response: any) => response);
   }
 
