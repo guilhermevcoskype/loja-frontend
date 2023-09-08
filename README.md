@@ -6,7 +6,7 @@
 
 Uma Pagina de Webstore com exibição de produtos (divididos por tipos) a serem vendidos e login e cadastramento de usuários para acesso ao pagamento ou acesso ao cadastramento dos produtos.
 
-![Video_230908193648-3](https://github.com/guilhermevcoskype/loja-frontend/assets/53445308/cb29f334-dcad-42ef-8c10-88e2c0a05f9b)
+![Home](https://github.com/guilhermevcoskype/loja-frontend/assets/53445308/92b193f2-c92c-4855-9b23-278de3a2e059)
 
 
 
