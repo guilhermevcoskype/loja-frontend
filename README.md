@@ -4,6 +4,15 @@
 <img loading="lazy" src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge"/>
 </p>
 
+Uma Pagina de Webstore com exibição de produtos (divididos por tipos) a serem vendidos e login e cadastramento de usuários para acesso ao pagamento ou acesso ao cadastramento dos produtos. 
+
+# :hammer: Funcionalidades do projeto
+
+- `Home`: Exibir uma página com funções da webstore mostrando os ultimos produtos cadastrados, uma busca de produtos e link para login ou cadastro de usuários.
+- `Página de Login`: Pagina com link para login de usuários cadastrados.
+- `Página de Cadastro de produtos`: Página permitida apenas para usuários com role ADMIN para cadastrar um produto na loja com imagem, preço, etc.
+- `Página de Cadastro de usuários`: Página utilizada para cadastro de usuários para poderem realizar as compras dos produtos.
+
 Para rodar esse projeto digite:
 
 ```
