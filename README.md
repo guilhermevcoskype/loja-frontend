@@ -4,7 +4,11 @@
 <img loading="lazy" src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge"/>
 </p>
 
-Uma Pagina de Webstore com exibição de produtos (divididos por tipos) a serem vendidos e login e cadastramento de usuários para acesso ao pagamento ou acesso ao cadastramento dos produtos. 
+Uma Pagina de Webstore com exibição de produtos (divididos por tipos) a serem vendidos e login e cadastramento de usuários para acesso ao pagamento ou acesso ao cadastramento dos produtos.
+
+![Video_230908193648-3](https://github.com/guilhermevcoskype/loja-frontend/assets/53445308/cb29f334-dcad-42ef-8c10-88e2c0a05f9b)
+
+
 
 # :hammer: Funcionalidades do projeto
 
