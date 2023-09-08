@@ -1,104 +1,69 @@
-<div class="text-uppercase">
-  <nav class="navbar navbar-expand-lg navbar-light bg-dark fixed-tops">
+<section class="text-uppercase">
+  <nav class="navbar navbar-expand-lg navbar-light bg-dark fixed-tops zindex">
     <div class="container mx-auto">
-      <a class="navbar-brand" href="/"> <img src="../../../assets/imagens/logo-loja.png" alt="Logo loja genérica">
+      <a class="navbar-brand" routerLink="/"> <img src="../../../assets/imagens/logo-loja.png" alt="Logo loja genérica">
       </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+      <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarNavAltMarkup"
         aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <!-- <form class="form-busca my-2 my-lg-0 w-50 w-sm-100"
-        th:action="@{/buscador}">
+
+      <div class="form-busca my-2 my-lg-0 w-50 w-sm-100">
         <div class="row w-100  m-0 mr-sm-2">
           <div class="col px-0 left-input-busca bg-white"></div>
-          <input class="col-10 m-0 search_input px-0" type="search"
-            placeholder="O que você está buscando?" name="busca"
+          <input class="col-10 m-0 search_input px-0" placeholder="O que você está buscando?" [formControl]="busca"
             aria-label="Search">
-          <input  type="hidden" name="usaBusca" th:value="true">
-          <button type="submit" class="col-1 search_icon px-0 bg-white">
-            <i class="fas fa-search text-info" alt="Pesquisar"></i>
+          <button class="col-1 search_icon px-0 bg-white nohover" disabled>
+            <fa-icon [icon]="faBusca" class="fas fa-search text-info"></fa-icon>
           </button>
         </div>
-      </form> -->
-      <div class="collapse navbar-collapse mx-auto" id="navbarNavAltMarkup">
-        <ul class="navbar-nav">
-          <li><a class="nav-item nav-link text-white w-auto active" href="#"><i class="fas fa-bars text-info"></i>
-              cadastrar <span class="sr-only">(current)</span></a></li>
-          <li><a class="nav-item nav-link text-white w-auto" href="#"><i
-                class="far fa-heart text-info h5 mr-1"></i>favoritos </a></li>
-          <li><a class="nav-item nav-link text-white" href="#"> <i class="fas fa-shopping-cart text-info h5"></i>
-              Carrinho
-            </a></li>
-        </ul>
       </div>
-      <!-- <div class="collapse navbar-collapse mx-auto"
-        id="navbarNavAltMarkup">
-        <ul class="navbar-nav">
-          <li sec:authorize="${hasRole('ADMIN')}"><a
-            class="nav-item nav-link text-white w-auto active" href="#"
-            th:href="@{/cadastro}"><i class="fas fa-bars text-info"></i>
-              cadastrar <span class="sr-only">(current)</span></a></li>
-          <li sec:authorize="${hasAnyRole('ADMIN', 'USER')}"><a
-            class="nav-item nav-link text-white w-auto" href="#"><i
-              class="far fa-heart text-info h5 mr-1"></i>favoritos </a></li>
-          <li><a class="nav-item nav-link text-white" href="#"
-            th:href="@{/carrinho}"> <i
-              class="fas fa-shopping-cart text-info h5"></i> Carrinho
-          </a></li>
-        </ul>
-      </div> -->
+
+      <div class="alert" *ngIf="mensagemErro">{{mensagemErro}}</div>
+
+      <div class="text-end">
+        <div *ngIf="!logado;else usuarioLogado">
+          <button class="nav-item nav-link text-white align-self-right p-3" (click)="carregarTela('login')">
+            Logar/Registrar </button>
+        </div>
+
+        <ng-template #usuarioLogado>
+          <div class="btn text-white" (mouseover)="isCollapsed = true" (mouseout)="isCollapsed = false"
+            (click)="isCollapsed = ! isCollapsed" [attr.aria-expanded]="!isCollapsed">{{ tokenDecodificado.sub }}
+            <div #collapse="ngbCollapse" [(ngbCollapse)]="!isCollapsed">
+              <ul class="navbar-nav flex-column">
+                <li *ngIf="tokenDecodificado && tokenDecodificado.roles == 'ROLE_ADMIN'"><a
+                    class="nav-item nav-link text-white w-auto active" routerLink="/conteudo/cadastroProduto">
+                    <fa-icon [icon]="faBarras" class="fas fa-bars text-info"></fa-icon>
+                    cadastrar
+                  </a></li>
+                <li><a class="nav-item nav-link text-white" routerLink="/conteudo/carrinho">
+                    <fa-icon [icon]="faCarrinho" class="fas fa-shopping-cart text-info h5"></fa-icon>
+                    carrinho
+                  </a></li>
+                <li><button class="btn text-white text-uppercase" (click)="acaoBotaoSair()">Sair</button></li>
+              </ul>
+            </div>
+          </div>
+        </ng-template>
+      </div>
     </div>
-
-
-    <a class="nav-item nav-link text-white align-self-right" href="#"> Logar/Registrar </a>
-
-
-
-    <label class="btn text-white"></label> <input class="btn text-white text-uppercase mb-2" type="submit" name="Sair">
-
-    <!-- <th:block sec:authorize="${!isAuthenticated()}">
-      <div th:if="${paginaLogin == null}">
-        <a class="nav-item nav-link text-white align-self-right" href="#" th:href="@{/login}"> Logar/Registrar </a>
-      </div>
-    </th:block>
-    <form sec:authorize="${isAuthenticated()}" th:action="@{/logout}" method="post">
-      <label class="btn text-white" sec:authentication="principal.username"></label> <input
-        class="btn text-white text-uppercase mb-2" type="submit" th:value="Sair" name="Sair"></input>
-    </form> -->
   </nav>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-tops">
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-tops zindex">
     <div class="container mx-auto">
-      <a class="navbar-brand" href="#">A maior loja do <span class="text-info">Brasil</span></a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+      <p class="navbar-brand">A maior loja do <span class="text-info">Brasil</span></p>
+      <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarNavAltMarkup"
         aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse pl-4" id="navbarNavAltMarkup2">
-        <ul class="navbar-nav">
-          <li><a class="nav-item nav-link" href="#">Camisas <span class="sr-only">(current)</span>
-            </a></li>
-          <li><a class="nav-item nav-link" href="#">Livros</a></li>
-          <li><a class="nav-item nav-link" href="#">Geral</a></li>
+        <ul class="navbar-nav" *ngFor="let tipoProduto of tipoProdutos">
+          <li *ngIf="tipoProduto"><button class="nav-item nav-link"
+              (click)="buscarTipoProduto(tipoProduto)">{{tipoProduto}} </button></li>
         </ul>
       </div>
     </div>
   </nav>
-  <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-tops">
-    <div class="container mx-auto">
-      <a class="navbar-brand" href="#">A maior loja do <span class="text-info">Brasil</span></a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse pl-4" id="navbarNavAltMarkup2">
-        <ul class="navbar-nav">
-          <li><a class="nav-item nav-link" href="#" th:href="@{'/tipoProduto?tipo=camisa'}">Camisas <span
-                class="sr-only">(current)</span>
-            </a></li>
-          <li><a class="nav-item nav-link" href="#" th:href="@{'/tipoProduto?tipo=livro'}">Livros</a></li>
-          <li><a class="nav-item nav-link" href="#" th:href="@{'/tipoProduto?tipo=geral'}">Geral</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav> -->
-</div>
+
+</section>

@@ -5,13 +5,13 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'produtos',
+    redirectTo: 'conteudo',
   },
   {
-    path: 'produtos',
+    path: 'conteudo',
     loadChildren: () =>
       import('./conteudo/conteudo.module').then((m) => m.ConteudoModule),
-  },
+  }
 ];
 
 @NgModule({

@@ -1,0 +1,55 @@
+<main class="container">
+  <div class="container text-center mt-3">
+    <h1>Carrinho</h1>
+  </div>
+  <table *ngIf="carrinho.carrinhoItens != null && carrinho.getQuantidadeTotal() != 0; else carrinhoVazio"
+    class="container mt-5 mb-5 table-striped">
+    <thead>
+      <tr class="tamanho-linha-carrinho border ml-1">
+        <th scope="col" class=" text-center"><span>Produto</span></th>
+        <th scope="col" class="  text-center"><span></span></th>
+        <th scope="col" class="  text-center"><span>Quantidade</span>
+        <th scope="col" class="  text-center"><span>Preço</span></th>
+        <th scope="col" class="  text-center"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="tamanho-linha-carrinho border ml-1" *ngFor="let carrinhoItem of mapItensKeys">
+        <th scope="row" class="  text-center"><img class="card-largura card-img-top card-posicao-imagem"
+            src={{carrinhoItem.produto.urlImagem}} onError="this.src='../../../assets/imagens/produto sem imagem.png'">
+        </th>
+        <td class="  text-center">{{carrinhoItem.produto.descricao}}</td>
+        <td class="  text-center">
+          <div class="btn-group inline" role="group">
+            <button title="diminuir" class="btn btn-lihgt border"
+              (click)="diminuirQuantidadeItem(carrinhoItem)">-</button>
+            <button type="text" title="quantidade" class="btn "
+              disabled>{{carrinho.getQuantidadeItem(carrinhoItem)}}</button>
+            <button title="aumentar" class="btn btn-lihgt border"
+              (click)="aumentarQuantidadeItem(carrinhoItem)">+</button>
+          </div>
+        <td class="  text-center">
+          {{carrinhoItem.getPrecoTotal(carrinho.getQuantidadeItem(carrinhoItem)) | currency: 'BRL'}}
+
+        </td>
+        <td class="  text-center">
+          <button title="remover" class="btn btn-dark" (click)="removerItem(carrinhoItem)">remover</button>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot class="tamanho-linha-carrinho border ml-1">
+      <tr>
+        <th class="  text-center">Total</th>
+        <td></td>
+        <td class="  text-center">{{carrinho.getQuantidadeTotal()}}</td>
+        <td class="  text-center">{{carrinho.getPrecoTotal() | currency: 'BRL'}}</td>
+        <td class="  text-right pr-1">
+          <button title="finalizar" class="btn btn-dark" (click)="finalizar()">Finalizar</button>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+  <ng-template #carrinhoVazio>
+    <h3 class="text-center titulos">Seu carrinho está vazio</h3>
+  </ng-template>
+</main>

@@ -2,15 +2,22 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CabecalhoComponent } from './cabecalho/cabecalho/cabecalho.component';
+import { RodapeComponent } from './rodape/rodape.component';
+import { JwtModule } from "@auth0/angular-jwt";
+import { CurrencyMaskModule } from 'ng2-currency-mask';
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CabecalhoComponent,
+    RodapeComponent,
   ],
   imports: [
     BrowserModule,
@@ -19,6 +26,13 @@ import { AppComponent } from './app.component';
     FontAwesomeModule,
     FormsModule,
     HttpClientModule,
+    ReactiveFormsModule,
+    CurrencyMaskModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => localStorage.getItem('access_token')
+      }
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

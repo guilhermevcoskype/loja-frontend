@@ -1,68 +1,27 @@
 <main>
   <div class="container">
-    <img class="container mt-3" src="../../../assets/imagens/banner-loja.png" alt="banner principal da loja genérica">
+    <img class="container mt-3" src="../../../assets/imagens/banner-loja.png" alt="banner principal da loja">
   </div>
 
-  <div class="container-fluid">
+  <div class="container-fluid" *ngIf="listProdutos.length > 0;else semProdutos">
 
-    <div class="container mt-5" *ngIf="listProdutos.length > 0;else semProdutos">
-      <h3 class="text-center titulos">Ultimos lançamentos</h3>
+    <div class="container text-center mt-3">
+      <h1>Ultimos lançamentos</h1>
     </div>
-    <ng-template #semProdutos>
-      <div class="container mt-5">
-        <h3 class="text-center titulos">Sem produtos disponíveis</h3>
-      </div>
-    </ng-template>
-
-    <!-- <section class="row justify-content-center card-text text-info">
-      <article class="card card-borda card-largura p-0 m-3 col-12 col-md-3">
-        <a> <img class="card-img-top card-posicao-imagem">
-          <div class="card-body">
-            <p class="card-title"></p>
-            <p class="card-text" id="preco"></p>
-          </div>
-        </a>
-      </article>
-    </section> -->
-
-    <div class="container">
-      <div class="row">
-        <app-produtos *ngFor="let produto of listProdutos"
-          [produto]="produto"
-          class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12">
+    <div class="container mb-3">
+      <div class="row justify-content-center card-text text-info">
+        <app-produtos
+          *ngFor="let produto of listProdutos | paginate: { currentPage: paginaAtual, itemsPerPage: itemsPerPage, totalItems: totalProdutos } let i = index"
+          [produto]="produto" class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12">
         </app-produtos>
+        <pagination-controls previousLabel="Anterior" nextLabel="Proximo" [responsive]="true"
+          (pageChange)="handlePageChange($event)"></pagination-controls>
       </div>
     </div>
   </div>
+  <ng-template #semProdutos>
+    <div class="container mt-3">
+      <h1>Sem produtos disponíveis</h1>
+    </div>
+  </ng-template>
 </main>
-
-<!-- <main>
-    <div class="container">
-        <img class="container mt-3" src="/images/banner-loja.png"
-             alt="banner principal da loja genérica">
-    </div>
-
-    <div class="container-fluid">
-
-        <div th:if="${produtos}" class="container mt-5">
-            <h3 class="text-center titulos">Ultimos lançamentos</h3>
-        </div>
-        <div th:unless="${produtos}" class="container mt-5">
-            <h3 class="text-center titulos">Sem produtos disponíveis</h3>
-        </div>
-
-        <section class="row justify-content-center card-text text-info">
-            <article th:each="produto : ${produtos}"
-                     class="card card-borda card-largura p-0 m-3 col-12 col-md-3">
-                <a th:href="@{'/detalhes/'+${produto.codigo}}"> <img
-                        class="card-img-top card-posicao-imagem"
-                        th:src="${produto.urlImagem}">
-                    <div class="card-body">
-                        <p th:text="${produto.descricao}" class="card-title"></p>
-                        <p th:text="${produto.precoFormatado}" class="card-text"
-                           id="preco"></p>
-                    </div></a>
-            </article>
-        </section>
-    </div>
-</main> -->

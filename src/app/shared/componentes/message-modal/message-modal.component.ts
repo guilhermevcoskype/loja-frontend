@@ -9,6 +9,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class MessageModalComponent {
 
   @Input() message: string = '';
+  @Input() titulo: string = '';
 
   constructor(public activeModal: NgbActiveModal) {}
 

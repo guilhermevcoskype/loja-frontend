@@ -1,0 +1,16 @@
+<main class="container mb-3">
+  <div class="container text-center mt-3">
+    <h1>Buscando: {{busca?busca.toLowerCase():busca}}</h1>
+  </div>
+  <div class="row justify-content-center card-text text-info" *ngIf="listProdutos.length > 0; else listaVazia">
+    <app-produtos
+      *ngFor="let produto of listProdutos | paginate: { currentPage: paginaAtual, itemsPerPage: itemsPerPage, totalItems: totalProdutos } let i = index"
+      [produto]="produto" class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12">
+    </app-produtos>
+    <pagination-controls previousLabel="Anterior" nextLabel="Proximo" [responsive]="true"
+      (pageChange)="handlePageChange($event)"></pagination-controls>
+  </div>
+  <ng-template #listaVazia>
+    <h3 class="text-center titulos">Não há uma produto com a descrição pesquisada</h3>
+  </ng-template>
+</main>
