@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import {
   faBars,
   /* faHeart, */
@@ -20,11 +20,22 @@ import { BuscaService } from 'src/app/conteudo/service/busca.service';
 import { DadoToken } from '../../conteudo/model/dadoToken';
 import { LoginService } from '../../conteudo/service/login.service';
 import { ProdutoService } from 'src/app/conteudo/service/produto.service';
+import { NgIf, NgClass, NgFor } from '@angular/common';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
-  selector: 'app-cabecalho',
-  templateUrl: './cabecalho.component.html',
-  styleUrls: ['./cabecalho.component.css'],
+    selector: 'app-cabecalho',
+    templateUrl: './cabecalho.component.html',
+    styleUrls: ['./cabecalho.component.css'],
+    standalone: true,
+    imports: [
+        RouterLink,
+        ReactiveFormsModule,
+        FontAwesomeModule,
+        NgIf,
+        NgClass,
+        NgFor,
+    ],
 })
 export class CabecalhoComponent implements OnInit, OnDestroy {
   faBusca = faSearch;

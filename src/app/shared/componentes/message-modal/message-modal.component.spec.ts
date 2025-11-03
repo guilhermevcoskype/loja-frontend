@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ErrorModalComponent } from './message-modal.component';
+import { MessageModalComponent } from './message-modal.component';
 
-describe('ErrorModalComponent', () => {
-  let component: ErrorModalComponent;
-  let fixture: ComponentFixture<ErrorModalComponent>;
+describe('MessageModalComponent', () => {
+  let component: MessageModalComponent;
+  let fixture: ComponentFixture<MessageModalComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ErrorModalComponent]
-    });
-    fixture = TestBed.createComponent(ErrorModalComponent);
+    imports: [MessageModalComponent]
+});
+    fixture = TestBed.createComponent(MessageModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

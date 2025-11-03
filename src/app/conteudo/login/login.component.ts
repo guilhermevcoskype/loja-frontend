@@ -1,6 +1,6 @@
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
+import { FormGroup, NonNullableFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -11,9 +11,11 @@ import { UsuarioService } from '../service/usuario.service';
 import { RequestToken } from '../model/requestToken';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.css'],
+    standalone: true,
+    imports: [ReactiveFormsModule],
 })
 export class LoginComponent implements OnInit, OnDestroy {
   formulario!: FormGroup;

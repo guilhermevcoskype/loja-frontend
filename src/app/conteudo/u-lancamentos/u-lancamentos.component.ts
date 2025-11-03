@@ -4,11 +4,21 @@ import { Produto } from 'src/app/conteudo/model/produto';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageModalComponent } from 'src/app/shared/componentes/message-modal/message-modal.component';
 import { Subscription } from 'rxjs';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { ProdutosComponent } from '../produtos/produtos.component';
+import { NgIf, NgFor } from '@angular/common';
 
 @Component({
-  selector: 'app-u-lancamentos',
-  templateUrl: './u-lancamentos.component.html',
-  styleUrls: ['./u-lancamentos.component.css'],
+    selector: 'app-u-lancamentos',
+    templateUrl: './u-lancamentos.component.html',
+    styleUrls: ['./u-lancamentos.component.css'],
+    standalone: true,
+    imports: [
+        NgIf,
+        NgFor,
+        ProdutosComponent,
+        NgxPaginationModule,
+    ],
 })
 export class ULancamentosComponent implements OnDestroy {
   listProdutos: Array<Produto> = [];

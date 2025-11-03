@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from "@angular/core";
 
 @Pipe({
-  name: "ellipsify"
+    name: "ellipsify",
+    standalone: true
 })
 export class EllipsifyPipe implements PipeTransform {
   transform(value: string, maximumLengthAllowed?: number): string {

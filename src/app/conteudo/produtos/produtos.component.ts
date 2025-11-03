@@ -3,11 +3,19 @@ import { Router } from '@angular/router';
 import { Produto } from 'src/app/conteudo/model/produto';
 import { CarrinhoItem } from '../model/carrinhoItem';
 import { CarrinhoService } from '../service/carrinho.service';
+import { EllipsifyPipe } from '../../shared/ellipsify.pipe';
+import { UpperCasePipe, CurrencyPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-produtos',
-  templateUrl: './produtos.component.html',
-  styleUrls: ['./produtos.component.css'],
+    selector: 'app-produtos',
+    templateUrl: './produtos.component.html',
+    styleUrls: ['./produtos.component.css'],
+    standalone: true,
+    imports: [
+        UpperCasePipe,
+        CurrencyPipe,
+        EllipsifyPipe,
+    ],
 })
 
 export class ProdutosComponent {

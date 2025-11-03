@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
+import { FormGroup, NonNullableFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Usuario } from '../model/usuario';
@@ -7,11 +7,18 @@ import { UsuarioService } from '../service/usuario.service';
 import { MessageModalComponent } from 'src/app/shared/componentes/message-modal/message-modal.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
+import { NgIf, NgClass } from '@angular/common';
 
 @Component({
-  selector: 'app-cadastro-usuario',
-  templateUrl: './cadastro-usuario.component.html',
-  styleUrls: ['./cadastro-usuario.component.css'],
+    selector: 'app-cadastro-usuario',
+    templateUrl: './cadastro-usuario.component.html',
+    styleUrls: ['./cadastro-usuario.component.css'],
+    standalone: true,
+    imports: [
+        ReactiveFormsModule,
+        NgIf,
+        NgClass,
+    ],
 })
 export class CadastroUsuarioComponent implements OnInit, OnDestroy {
   formulario!: FormGroup;
