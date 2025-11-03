@@ -6,7 +6,7 @@ import { Produto } from '../model/produto';
 import { ProdutoService } from '../service/produto.service';
 import { UsuarioService } from '../service/usuario.service';
 import { MessageModalComponent } from 'src/app/shared/componentes/message-modal/message-modal.component';
-import { CurrencyPipe, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 
 @Component({
@@ -15,11 +15,11 @@ import { CurrencyMaskModule } from 'ng2-currency-mask';
     styleUrls: ['./cadastro-produto.component.css'],
     standalone: true,
     imports: [
-        ReactiveFormsModule,
-        CurrencyMaskModule,
-        FormsModule,
-        NgIf,
-    ],
+    ReactiveFormsModule,
+    CurrencyMaskModule,
+    FormsModule,
+    NgIf
+],
 })
 export class CadastroProdutoComponent implements OnInit {
   formulario!: FormGroup;
@@ -37,7 +37,6 @@ export class CadastroProdutoComponent implements OnInit {
     private usuarioService: UsuarioService,
     private modalService: NgbModal,
     private produtoService: ProdutoService,
-    private currencyPipe: CurrencyPipe
   ) {}
 
   ngOnInit(): void {

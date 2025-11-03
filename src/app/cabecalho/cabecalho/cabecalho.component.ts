@@ -13,7 +13,6 @@ import {
   debounceTime,
   filter,
   switchMap,
-  tap,
   throwError,
 } from 'rxjs';
 import { BuscaService } from 'src/app/conteudo/service/busca.service';
