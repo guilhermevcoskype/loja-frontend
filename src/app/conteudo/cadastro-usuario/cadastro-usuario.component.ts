@@ -47,7 +47,7 @@ export class CadastroUsuarioComponent implements OnInit, OnDestroy {
           Validators.minLength(3),
         ]),
       ],
-      roles: ['ROLE_ADMIN'],
+      roles: ['ADMIN'],
     });
   }
 

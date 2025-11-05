@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           Validators.minLength(3),
         ]),
       ],
-      roles: ["ROLE_USER"],
+      roles: ["USER"],
     });
   }
 
