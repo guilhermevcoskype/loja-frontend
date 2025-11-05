@@ -5,11 +5,18 @@ import { MessageModalComponent } from 'src/app/shared/componentes/message-modal/
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PagamentoService } from '../service/pagamento.service';
 import { LoginService } from '../service/login.service';
+import { NgIf, NgFor, CurrencyPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-carrinho',
-  templateUrl: './carrinho.component.html',
-  styleUrls: ['./carrinho.component.css'],
+    selector: 'app-carrinho',
+    templateUrl: './carrinho.component.html',
+    styleUrls: ['./carrinho.component.css'],
+    standalone: true,
+    imports: [
+        NgIf,
+        NgFor,
+        CurrencyPipe,
+    ],
 })
 export class CarrinhoComponent implements OnInit, OnDestroy {
   carrinho: CarrinhoService;

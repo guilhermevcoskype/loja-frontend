@@ -6,11 +6,21 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageModalComponent } from 'src/app/shared/componentes/message-modal/message-modal.component';
 import { BuscaService } from '../service/busca.service';
 import { Subscription } from 'rxjs';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { ProdutosComponent } from '../produtos/produtos.component';
+import { NgIf, NgFor } from '@angular/common';
 
 @Component({
-  selector: 'app-busca-produto',
-  templateUrl: './busca-produto.component.html',
-  styleUrls: ['./busca-produto.component.css'],
+    selector: 'app-busca-produto',
+    templateUrl: './busca-produto.component.html',
+    styleUrls: ['./busca-produto.component.css'],
+    standalone: true,
+    imports: [
+        NgIf,
+        NgFor,
+        ProdutosComponent,
+        NgxPaginationModule,
+    ],
 })
 export class BuscaProdutoComponent implements OnInit, OnDestroy {
   listProdutos: Produto[] = [];

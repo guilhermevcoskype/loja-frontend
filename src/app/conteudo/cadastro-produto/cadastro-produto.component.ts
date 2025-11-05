@@ -1,17 +1,25 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
+import { FormControl, FormGroup, NonNullableFormBuilder, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Produto } from '../model/produto';
 import { ProdutoService } from '../service/produto.service';
 import { UsuarioService } from '../service/usuario.service';
 import { MessageModalComponent } from 'src/app/shared/componentes/message-modal/message-modal.component';
-import { CurrencyPipe } from '@angular/common';
+import { NgIf } from '@angular/common';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 
 @Component({
-  selector: 'app-cadastro-produto',
-  templateUrl: './cadastro-produto.component.html',
-  styleUrls: ['./cadastro-produto.component.css'],
+    selector: 'app-cadastro-produto',
+    templateUrl: './cadastro-produto.component.html',
+    styleUrls: ['./cadastro-produto.component.css'],
+    standalone: true,
+    imports: [
+    ReactiveFormsModule,
+    CurrencyMaskModule,
+    FormsModule,
+    NgIf
+],
 })
 export class CadastroProdutoComponent implements OnInit {
   formulario!: FormGroup;
@@ -29,7 +37,6 @@ export class CadastroProdutoComponent implements OnInit {
     private usuarioService: UsuarioService,
     private modalService: NgbModal,
     private produtoService: ProdutoService,
-    private currencyPipe: CurrencyPipe
   ) {}
 
   ngOnInit(): void {

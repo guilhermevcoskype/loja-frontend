@@ -30,9 +30,10 @@
         <ng-template #usuarioLogado>
           <div class="btn text-white" (mouseover)="isCollapsed = true" (mouseout)="isCollapsed = false"
             (click)="isCollapsed = ! isCollapsed" [attr.aria-expanded]="!isCollapsed">{{ tokenDecodificado.sub }}
-            <div #collapse="ngbCollapse" [(ngbCollapse)]="!isCollapsed">
+            <!-- <div #collapse="ngbCollapse" [(ngbCollapse)]="!isCollapsed"> -->
+              <div class="collapse" [ngClass]="{'show': isCollapsed}">
               <ul class="navbar-nav flex-column">
-                <li *ngIf="tokenDecodificado && tokenDecodificado.roles == 'ROLE_ADMIN'"><a
+                <li *ngIf="tokenDecodificado && tokenDecodificado.roles == 'ADMIN'"><a
                     class="nav-item nav-link text-white w-auto active" routerLink="/conteudo/cadastroProduto">
                     <fa-icon [icon]="faBarras" class="fas fa-bars text-info"></fa-icon>
                     cadastrar

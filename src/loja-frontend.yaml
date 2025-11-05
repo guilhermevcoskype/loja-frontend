@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: loja-frontend
+  labels:
+    app: loja-frontend
+spec:
+  containers:
+    - name: loja-frontend-container
+      image: .
+      ports:
+        - containerPort: 4200

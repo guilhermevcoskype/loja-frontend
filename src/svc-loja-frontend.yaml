@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-loja-frontend
+spec:
+  type: NodePort
+  ports:
+    - port: 4200
+      #targetPort: 80
+      nodePort: 30000
+  selector:
+    app: loja-frontend

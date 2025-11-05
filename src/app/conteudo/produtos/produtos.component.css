@@ -1,0 +1,18 @@
+.card-borda {
+	border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-borda * {
+	text-align: center;
+  ;
+}
+
+.card-title {
+	font-family: 'Varela Round', sans-serif;
+	height: 2rem;
+	font-weight: bold;
+}

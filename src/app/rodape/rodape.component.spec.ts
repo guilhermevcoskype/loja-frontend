@@ -8,8 +8,8 @@ describe('RodapeComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [RodapeComponent]
-    });
+    imports: [RodapeComponent]
+});
     fixture = TestBed.createComponent(RodapeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

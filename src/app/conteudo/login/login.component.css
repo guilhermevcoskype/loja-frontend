@@ -1,0 +1,8 @@
+#login  #login-row #login-column #login-box {
+	border: 1px solid #9C9C9C;
+	background-color: #EAEAEA;
+}
+
+#login  #login-row #login-column #login-box #login-form {
+	padding: 20px;
+}
