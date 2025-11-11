@@ -9,6 +9,7 @@ import { RequestToken } from '../model/requestToken';
 })
 export class UsuarioService {
   private readonly API: string = 'http://localhost:8080/';
+  //private readonly API: string = 'http://loja-backend:8080/';
 
   constructor(private httpClient: HttpClient) {}
 

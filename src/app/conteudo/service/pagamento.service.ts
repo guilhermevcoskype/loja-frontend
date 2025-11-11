@@ -8,6 +8,7 @@ import { LoginService } from './login.service';
 })
 export class PagamentoService {
   private readonly API: string = "http://localhost:8080/pagamento";
+  //private readonly API: string = "http://loja-backend:8080/pagamento";
 
   constructor(private httpClient: HttpClient,
     private loginService: LoginService) {}
