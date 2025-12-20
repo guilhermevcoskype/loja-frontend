@@ -5,14 +5,15 @@
     {
       "name": "ng serve",
       "type": "chrome",
-      "request": "launch",
+      "request": "attach",
       "preLaunchTask": "npm: start",
+      "runtimeExecutable": "C:/Program Files/Opera/Opera.exe",
       "url": "http://localhost:4200/"
     },
     {
       "name": "ng test",
       "type": "chrome",
-      "request": "launch",
+      "request": "attach",
       "preLaunchTask": "npm: test",
       "url": "http://localhost:9876/debug.html"
     }
