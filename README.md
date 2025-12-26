@@ -32,6 +32,7 @@ Demonstrar a criação de uma aplicação de e-commerce moderna utilizando Angul
 ### 🔗 Repositórios Relacionados
 
 * 🔙 [Backend (Spring Boot)](https://github.com/guilhermevcoskype/loja-backend) _(em desenvolvimento)_
+* 🏗️ [Infraestrutura (Docker)](https://github.com/guilhermevcoskype/loja-infra) _(em desenvolvimento)_
 
 ---
 
@@ -75,104 +76,56 @@ Demonstrar a criação de uma aplicação de e-commerce moderna utilizando Angul
 | :--- | :---: | :--- |
 | **Home Page** | ✅ | Página inicial com produtos em destaque |
 | **Busca de Produtos** | ✅ | Sistema de busca e filtros |
-| **Catálogo de Produtos** | ✅ | Listagem de produtos por categorias |
-| **Detalhes do Produto** | ✅ | Visualização completa do produto |
+| **Catálogo de Produtos** | ✅ | Listagem de produtos por descrição |
+| **Detalhes do Produto** | ⚠️ |  Em desenvolvimento |
 | **Autenticação** | ✅ | Login e cadastro de usuários |
-| **Painel Admin** | ✅ | CRUD de produtos (role ADMIN) |
-| **Carrinho de Compras** | ⚠️ | Em desenvolvimento |
+| **Painel Admin** | ⚠️ |  Apenas cadastramento de produtos feita|
+| **Carrinho de Compras** | ✅ | Carrinho de compras com produtos, quantidades e valores|
 | **Checkout** | ⚠️ | Em desenvolvimento |
 | **Histórico de Pedidos** | ⚠️ | Planejado |
 
 ---
 
-## 🔨 Funcionalidades Principais
+## 🚀 Como rodar localmente
 
-### 👤 Para Usuários
+### 1. Com Docker (Recomendado)
+```bash
+# Clone o repositório
+git clone [https://github.com/guilhermevcoskype/loja-frontend.git](https://github.com/guilhermevcoskype/loja-frontend.git)
 
-* **Home Page**
-  - Exibição dos últimos produtos cadastrados
-  - Produtos em destaque
-  - Sistema de busca integrado
-  - Navegação por categorias
-  - Links para login/cadastro
+# Acesse a pasta
+cd diario-online-frontend
 
-* **Autenticação**
-  - Página de login para usuários cadastrados
-  - Página de cadastro de novos usuários
-  - Recuperação de senha
-  - Validação de formulários
-
-* **Catálogo**
-  - Listagem de produtos com paginação
-  - Filtros por categoria e preço
-  - Visualização detalhada de produtos
-  - Sistema de busca avançada
-
-### 🔐 Para Administradores (Role: ADMIN)
-
-* **Gerenciamento de Produtos**
-  - Cadastro de novos produtos
-  - Edição de produtos existentes
-  - Upload de imagens
-  - Definição de preço e estoque
-  - Categorização de produtos
-  - Exclusão de produtos
+# Build e execução via Docker
+docker build -t loja-frontend .
+docker run -p 80:80 loja-frontend
+```
 
 ---
 
-## 🚀 Como Rodar Localmente
-
-### Pré-requisitos
+### 2. Sem Docker
 
 - **Node.js** 18.x ou superior
 - **npm** 9.x ou superior
 - **Angular CLI** 19.x
 
-```bash
-npm install -g @angular/cli@19
-```
-
-### Instalação
-
 1. **Clone o repositório**
-
 ```bash
 git clone https://github.com/guilhermevcoskype/loja-frontend.git
 cd loja-frontend
 ```
 
 2. **Instale as dependências**
-
 ```bash
 npm install
 ```
 
 3. **Execute o projeto**
-
 ```bash
 ng serve
 ```
 
-ou simplesmente:
-
-```bash
-npm start
-```
-
-4. **Acesse no navegador**
-
-```
-http://localhost:4200
-```
-
-### Build para Produção
-
-```bash
-# Build otimizado
-ng build --configuration production
-
-# Arquivos gerados em dist/
-```
+A aplicação estará disponível em `http://localhost:4200`
 
 ---
 
@@ -180,45 +133,60 @@ ng build --configuration production
 
 ```
 loja-frontend/
-├── .vscode/                    # Configurações do VS Code
+├── .vscode/                          # Configurações do VS Code
 ├── src/
-│   ├── app/                    # Aplicação Angular
-│   │   ├── components/         # Componentes da aplicação
-│   │   │   ├── home/           # Página inicial
-│   │   │   ├── login/          # Página de login
-│   │   │   ├── register/       # Cadastro de usuários
-│   │   │   ├── products/       # Listagem de produtos
-│   │   │   ├── product-detail/ # Detalhes do produto
-│   │   │   └── admin/          # Painel administrativo
+│   ├── app/
+│   │   ├── cabecalho/                # Componente de cabeçalho
+│   │   │   ├── cabecalho.component.css
+│   │   │   ├── cabecalho.component.html
+│   │   │   ├── cabecalho.component.spec.ts
+│   │   │   └── cabecalho.component.ts
 │   │   │
-│   │   ├── services/           # Serviços e lógica de negócio
-│   │   │   ├── auth.service.ts       # Autenticação
-│   │   │   ├── product.service.ts    # Produtos
-│   │   │   └── user.service.ts       # Usuários
+│   │   ├── conteudo/                 # Módulo principal de conteúdo
+│   │   │   ├── busca-produto/        # Busca de produtos
+│   │   │   │   ├── busca-produto.component.css
+│   │   │   │   ├── busca-produto.component.html
+│   │   │   │   ├── busca-produto.component.spec.ts
+│   │   │   │   └── busca-produto.component.ts
+│   │   │   │
+│   │   │   ├── cadastro-produto/     # Cadastro de produtos (Admin)
+│   │   │   ├── cadastro-usuario/     # Cadastro de usuários
+│   │   │   ├── carrinho/             # Carrinho de compras
+│   │   │   ├── login/                # Autenticação
+│   │   │   ├── model/                # Modelos de dados
+│   │   │   ├── produtos/             # Listagem de produtos
+│   │   │   ├── service/              # Serviços
+│   │   │   ├── u-lancamentos/        # Últimos lançamentos
+│   │   │   ├── conteudo.module.ts
+│   │   │   └── conteudo.routes.ts
 │   │   │
-│   │   ├── models/             # Interfaces e tipos TypeScript
-│   │   │   ├── product.model.ts
-│   │   │   ├── user.model.ts
-│   │   │   └── category.model.ts
+│   │   ├── guards/                   # Guards de rota
+│   │   ├── interceptors/             # HTTP interceptors
 │   │   │
-│   │   ├── guards/             # Guards de rota
-│   │   │   ├── auth.guard.ts
-│   │   │   └── admin.guard.ts
+│   │   ├── rodape/                   # Componente de rodapé
+│   │   │   ├── rodape.component.css
+│   │   │   ├── rodape.component.html
+│   │   │   ├── rodape.component.spec.ts
+│   │   │   └── rodape.component.ts
 │   │   │
-│   │   └── interceptors/       # HTTP interceptors
-│   │       ├── auth.interceptor.ts
-│   │       └── error.interceptor.ts
+│   │   ├── shared/                   # Componentes compartilhados
+│   │   │
+│   │   ├── app.component.css
+│   │   ├── app.component.html
+│   │   ├── app.component.spec.ts
+│   │   ├── app.component.ts
+│   │   └── app.routes.ts
 │   │
-│   ├── assets/                 # Imagens, ícones, fontes
-│   ├── styles/                 # Estilos globais CSS/SCSS
-│   └── environments/           # Configurações por ambiente
+│   ├── assets/                       # Imagens, ícones, fontes
+│   ├── styles/                       # Estilos globais
+│   └── environments/                 # Configurações por ambiente
 │
-├── .editorconfig               # Configuração do editor
-├── .gitignore                  # Arquivos ignorados pelo Git
-├── angular.json                # Configuração do Angular CLI
-├── package.json                # Dependências do projeto
-├── tsconfig.json               # Configuração TypeScript
-└── README.md                   # Este arquivo
+├── .editorconfig                     # Configuração do editor
+├── .gitignore                        # Arquivos ignorados pelo Git
+├── angular.json                      # Configuração do Angular CLI
+├── package.json                      # Dependências do projeto
+├── tsconfig.json                     # Configuração TypeScript
+└── README.md                         # Este arquivo
 ```
 
 ---
@@ -255,160 +223,33 @@ A aplicação utiliza Bootstrap 5 para garantir:
 
 ---
 
-## 🌐 Integração com Backend
+## 🐳 Docker
 
-### Endpoints Consumidos
+### Dockerfile
+O projeto inclui um Dockerfile multi-stage otimizado:
+- Stage 1: Build da aplicação Angular
+- Stage 2: Servir com Nginx
 
-```typescript
-// Autenticação
-POST /api/auth/login
-POST /api/auth/register
-
-// Produtos (Público)
-GET  /api/products
-GET  /api/products/:id
-GET  /api/products/search?q={query}
-GET  /api/categories
-
-// Produtos (Admin)
-POST   /api/products         # Criar produto
-PUT    /api/products/:id     # Atualizar produto
-DELETE /api/products/:id     # Deletar produto
-
-// Usuários
-GET /api/users/profile
-PUT /api/users/profile
-```
-
-### Configuração de Ambiente
-
-**src/environments/environment.ts** (Desenvolvimento)
-```typescript
-export const environment = {
-  production: false,
-  apiUrl: 'http://localhost:8080/api'
-};
-```
-
-**src/environments/environment.prod.ts** (Produção)
-```typescript
-export const environment = {
-  production: true,
-  apiUrl: 'https://api.sualoja.com/api'
-};
-```
+### nginx.conf
+Configuração customizada do Nginx para:
+- Servir arquivos estáticos
+- Roteamento SPA (Single Page Application)
 
 ---
 
 ## 🎯 Padrões de Código
 
-### Componentes
-
-- Standalone Components (Angular 19+)
-- OnPush change detection quando possível
-- Smart/Dumb components pattern
-- Unsubscribe de observables no ngOnDestroy
+- **Componentes**: Estrutura modular e reutilizável
+- **Services**: Injeção de dependências
+- **Signals**: Acesso a dados de qualquer lugar do projeto
+- **SCSS**: Metodologia BEM para nomenclatura de classes
+- **TypeScript**: Tipagem forte e interfaces bem definidas
 
 ### Services
 
 - Singleton services via `providedIn: 'root'`
 - Métodos retornam Observables
-- Tratamento de erros centralizado
 - Cache de dados quando apropriado
-
-### Nomenclatura
-
-- Componentes: `product-list.component.ts`
-- Services: `product.service.ts`
-- Models: `product.model.ts`
-- Guards: `auth.guard.ts`
-
----
-
-## 🧪 Testes
-
-```bash
-# Testes unitários
-ng test
-
-# Testes com cobertura
-ng test --code-coverage
-
-# Testes E2E (se configurado)
-ng e2e
-```
-
----
-
-## 🚀 Deploy
-
-### Vercel / Netlify
-
-```bash
-# Build de produção
-ng build --configuration production
-
-# Deploy automático via Git
-# Configure no painel do Vercel/Netlify
-```
-
-### Firebase Hosting
-
-```bash
-# Instale o Firebase CLI
-npm install -g firebase-tools
-
-# Login
-firebase login
-
-# Inicialize
-firebase init
-
-# Deploy
-firebase deploy
-```
-
----
-
-## 📚 Próximas Funcionalidades
-
-- [ ] Carrinho de compras completo
-- [ ] Sistema de pagamento
-- [ ] Histórico de pedidos
-- [ ] Sistema de avaliações
-- [ ] Lista de desejos
-- [ ] Sistema de cupons de desconto
-- [ ] Notificações em tempo real
-- [ ] Chat de suporte
-- [ ] Modo escuro (dark mode)
-- [ ] PWA (Progressive Web App)
-
----
-
-## 🐛 Issues Conhecidos
-
-- [ ] Melhorar performance no carregamento de imagens
-- [ ] Implementar lazy loading de imagens
-- [ ] Adicionar skeleton loading
-- [ ] Melhorar acessibilidade (ARIA labels)
-
----
-
-## 🤝 Contribuindo
-
-Contribuições são bem-vindas! Para contribuir:
-
-1. Fork o projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/NovaFuncionalidade`)
-3. Commit suas mudanças (`git commit -m 'Add: nova funcionalidade'`)
-4. Push para a branch (`git push origin feature/NovaFuncionalidade`)
-5. Abra um Pull Request
-
----
-
-## 📝 Licença
-
-Este projeto está sob a licença MIT.
 
 ---
 
@@ -418,14 +259,12 @@ Este projeto está sob a licença MIT.
 
 - GitHub: [guilhermevcoskype](https://github.com/guilhermevcoskype)
 - LinkedIn: [guilherme-vale-oliveira-dev](https://www.linkedin.com/in/guilherme-vale-oliveira-dev/)
-- Email: [guilhermevcoskype@gmail.com](mailto:guilhermevcoskype@gmail.com)
+- Email: [guilhermevcoskype@gmail](guilhermevcoskype@gmail.com)
 
 ---
 
 <div align="center">
 
 Desenvolvido com ❤️ usando Angular
-
-⭐ Se você gostou deste projeto, considere dar uma estrela!
 
 </div>
