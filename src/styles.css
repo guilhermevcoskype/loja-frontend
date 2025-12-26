@@ -25,7 +25,7 @@
 
 /* Ajuste para o conteúdo não ficar escondido sob o header fixo */
 body {
-  padding-top: 105px; /* Ajuste conforme a altura do seu header */
+  padding-top: 107px; /* Ajuste conforme a altura do seu header */
 }
 
 .animate-fade-in {
