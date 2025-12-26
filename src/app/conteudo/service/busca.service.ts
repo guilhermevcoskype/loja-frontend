@@ -1,26 +1,29 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BuscaService {
+  // Signals para armazenar o termo e o tipo da busca
+  termoBusca = signal<string>('');
+  tipoBusca = signal<string>('');
 
-  private buscaSource = new BehaviorSubject<string>('');
-  private buscaPorTipoSource = new BehaviorSubject<string>('');
-  busca = this.buscaSource.asObservable();
-  buscaTipoProduto = this.buscaPorTipoSource.asObservable();
+  constructor(private router: Router) { }
 
-  constructor() { }
-
-  setBusca(busca: string, router: Router){
-    this.buscaSource.next(busca);
-    router.navigate(['/conteudo/buscaProduto'], { state: { busca }, onSameUrlNavigation: 'reload' });
+  setBusca(busca: string) {
+    this.termoBusca.set(busca);
+    this.tipoBusca.set(''); // Limpa a busca por tipo ao fazer busca textual
+    this.navegar();
   }
 
-  setBuscaPorTipo(tipoProduto: string, router: Router){
-    this.buscaPorTipoSource.next(tipoProduto);
-    router.navigate(['/conteudo/buscaProduto'], { state: { tipoProduto }, onSameUrlNavigation: 'reload' });
+  setBuscaPorTipo(tipo: string) {
+    this.tipoBusca.set(tipo);
+    this.termoBusca.set(''); // Limpa a busca textual ao filtrar por tipo
+    this.navegar();
+  }
+
+  private navegar() {
+    this.router.navigate(['/conteudo/buscaProduto']);
   }
 }

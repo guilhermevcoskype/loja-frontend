@@ -25,5 +25,14 @@
 
 /* Ajuste para o conteúdo não ficar escondido sob o header fixo */
 body {
-  padding-top: 110px; /* Ajuste conforme a altura do seu header */
+  padding-top: 105px; /* Ajuste conforme a altura do seu header */
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

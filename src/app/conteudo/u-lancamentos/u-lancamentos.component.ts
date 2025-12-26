@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { ProdutoService } from '../service/produto.service';
 import { Produto } from 'src/app/conteudo/model/produto';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -6,61 +6,55 @@ import { MessageModalComponent } from 'src/app/shared/componentes/message-modal/
 import { Subscription } from 'rxjs';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ProdutosComponent } from '../produtos/produtos.component';
-import { NgIf, NgFor } from '@angular/common';
+
 
 @Component({
-    selector: 'app-u-lancamentos',
-    templateUrl: './u-lancamentos.component.html',
-    styleUrls: ['./u-lancamentos.component.css'],
-    standalone: true,
-    imports: [
-        NgIf,
-        NgFor,
-        ProdutosComponent,
-        NgxPaginationModule,
-    ],
+  selector: 'app-u-lancamentos',
+  standalone: true,
+  imports: [ProdutosComponent, NgxPaginationModule],
+  templateUrl: './u-lancamentos.component.html',
+  styleUrls: ['./u-lancamentos.component.css']
 })
 export class ULancamentosComponent implements OnDestroy {
+  // Injeções modernas
+  private produtoService = inject(ProdutoService);
+  private modalService = inject(NgbModal);
+
   listProdutos: Array<Produto> = [];
   paginaAtual: number = 1;
   itemsPerPage: number = 0;
   totalProdutos: number = 0;
-  currentIndex = -1;
-  produtosSubscription!: Subscription;
+  
+  private sub?: Subscription;
 
-  constructor(
-    private readonly produtoService: ProdutoService,
-    private modalService: NgbModal
-  ) {
+  constructor() {
     this.getListProdutos();
   }
 
   getListProdutos() {
-    return this.produtoService.getListProdutos(this.paginaAtual).subscribe({
+    this.sub = this.produtoService.getListProdutos(this.paginaAtual - 1).subscribe({ // Ajustado para 0-based se sua API Java for padrão Spring
       next: (page) => {
         this.listProdutos = page.content;
         this.totalProdutos = page.totalElements;
         this.itemsPerPage = page.size;
       },
-      error: (erro) => {
-        this.openModal("Ocorreu um erro, favor contatar o dev", "Erro");
-        return [];
-      },
+      error: () => this.openModal("Erro ao carregar produtos.", "Erro")
     });
   }
 
+  handlePageChange(event: number): void {
+    this.paginaAtual = event;
+    this.getListProdutos();
+    window.scrollTo(0, 0); // Experiência de usuário: volta ao topo ao mudar de página
+  }
+
   ngOnDestroy(): void {
-    if (this.produtosSubscription) this.produtosSubscription.unsubscribe();
+    this.sub?.unsubscribe();
   }
 
   openModal(message: string, titulo: string) {
     const modalRef = this.modalService.open(MessageModalComponent);
     modalRef.componentInstance.message = message;
     modalRef.componentInstance.titulo = titulo;
-  }
-
-  handlePageChange(event: number): void {
-    this.paginaAtual = event;
-    this.getListProdutos();
   }
 }

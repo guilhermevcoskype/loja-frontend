@@ -1,85 +1,75 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal, computed, effect } from '@angular/core';
 import { CarrinhoItem } from '../model/carrinhoItem';
 import { ProdutoService } from './produto.service';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class CarrinhoService {
-  carrinhoItens: CarrinhoItem[] = [];
+  // Signal que armazena a lista de itens
+  private itensSignal = signal<CarrinhoItem[]>([]);
 
-  constructor(private produtoService: ProdutoService) {
-    const dados = sessionStorage.getItem('itens');
-    if (dados !== null) {
-      const objetos = JSON.parse(dados);
-      this.carrinhoItens = objetos.map((obj: any) =>
-        CarrinhoItem.fromObject(obj)
-      );
-    }
-  }
+  // Signals computados (leitura automática)
+  readonly itens = this.itensSignal.asReadonly();
+  readonly quantidadeTotal = computed(() => 
+    this.itensSignal().reduce((total, item) => total + item.quantidade, 0)
+  );
+  readonly precoTotal = computed(() => 
+    this.itensSignal().reduce((total, item) => total + (item.produto.preco * item.quantidade), 0)
+  );
 
-  getQuantidadeItem(item: CarrinhoItem) {
-    const index = this.verificarExistencia(item);
-    if (index > -1) {
-      return this.carrinhoItens.find(
-        (itemProcurado) => itemProcurado.produto.id === item.produto.id
-      )?.quantidade;
-    }
-    return 0;
-  }
-
-  getQuantidadeTotal(): number {
-    let total = 0;
-    this.carrinhoItens.forEach((item) => (total += item.quantidade));
-    return total;
-  }
-
-  getPrecoTotal() {
-    let total = 0;
-    this.carrinhoItens.forEach((item) => {
-      total += item.getPrecoTotal(this.getQuantidadeItem(item));
+  constructor() {
+    this.carregarDados();
+    
+    // Efeito para salvar no sessionStorage sempre que o signal mudar
+    effect(() => {
+      sessionStorage.setItem('itens', JSON.stringify(this.itensSignal()));
     });
-    return total;
   }
 
   aumentarQuantidadeItem(item: CarrinhoItem) {
-    const index = this.verificarExistencia(item);
-    if (index > -1) {
-      const itemAtual = this.carrinhoItens[this.carrinhoItens.indexOf(item)];
-      itemAtual?.setQuantidade(itemAtual.quantidade + 1);
-      this.carrinhoItens[this.carrinhoItens.indexOf(item)] = itemAtual;
-    } else {
-      item.setQuantidade(item.quantidade + 1);
-      this.carrinhoItens.push(item);
-    }
-    this.armazenarDados();
+    this.itensSignal.update(lista => {
+      const index = lista.findIndex(i => i.produto.id === item.produto.id);
+      if (index > -1) {
+        lista[index].quantidade++;
+        return [...lista];
+      }
+      item.quantidade = 1;
+      return [...lista, item];
+    });
   }
 
   diminuirQuantidadeItem(item: CarrinhoItem) {
-    const index = this.verificarExistencia(item);
-    if (index > -1) {
-      const itemAtual = this.carrinhoItens[this.carrinhoItens.indexOf(item)];
-      itemAtual?.setQuantidade(itemAtual.quantidade - 1);
-      this.carrinhoItens[this.carrinhoItens.indexOf(item)] = itemAtual;
-    } else this.removerItem(item);
-    this.armazenarDados();
+    this.itensSignal.update(lista => {
+      const index = lista.findIndex(i => i.produto.id === item.produto.id);
+      if (index > -1) {
+        if (lista[index].quantidade > 1) {
+          lista[index].quantidade--;
+        } else {
+          lista.splice(index, 1);
+        }
+      }
+      return [...lista];
+    });
   }
 
-  removerItem(item: CarrinhoItem) {
-    const index = this.verificarExistencia(item);
-    if (index > -1) {
-      this.carrinhoItens.splice(this.carrinhoItens.indexOf(item), 1);
+  private carregarDados() {
+    const dados = sessionStorage.getItem('itens');
+    if (dados) {
+      const objetos = JSON.parse(dados);
+      this.itensSignal.set(objetos.map((obj: any) => CarrinhoItem.fromObject(obj)));
     }
-    this.armazenarDados();
+  }
+  removerItem(item: CarrinhoItem) {
+    this.itensSignal.update(lista => {
+      // Filtra a lista para manter apenas os itens que NÃO são o que queremos remover
+      const novaLista = lista.filter(i => i.produto.id !== item.produto.id);
+      return novaLista;
+    });
+    // O effect que criamos no constructor cuidará de salvar no sessionStorage automaticamente
   }
 
-  verificarExistencia(item: CarrinhoItem): number {
-    return this.carrinhoItens.findIndex(
-      (itemProcurado) => itemProcurado.produto.id === item.produto.id
-    );
-  }
-
-  private armazenarDados() {
-    sessionStorage.setItem('itens', JSON.stringify(this.carrinhoItens));
+  // É útil ter um método para limpar tudo após o pagamento
+  limparCarrinho() {
+    this.itensSignal.set([]);
+    sessionStorage.removeItem('itens');
   }
 }

@@ -1,57 +1,49 @@
-import { Injectable } from '@angular/core';
-import { DadoToken, DadoToken as string } from '../model/dadoToken';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable, signal, computed, inject } from '@angular/core';
+import { DadoToken } from '../model/dadoToken';
+import { CarrinhoService } from './carrinho.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  private token!: string;
-  private dadosTokenSource = new BehaviorSubject<DadoToken>(new DadoToken());
-  tokenDecodificado$ = this.dadosTokenSource.asObservable();
-  tokenDecodificado?: DadoToken;
+  // Signal privado para armazenar os dados do usuário
+  private usuarioLogado = signal<DadoToken | null>(null);
+
+  // Signal público somente leitura
+  readonly usuario = this.usuarioLogado.asReadonly();
+  private carrinhoService = inject(CarrinhoService);
+
+  // Computed signals para facilitar a vida
+  readonly estaLogado = computed(() => !!this.usuarioLogado());
+  readonly isAdmin = computed(() => this.usuarioLogado()?.roles?.includes('ADMIN') ?? false);
 
   constructor() {
-    this.recuperarToken();
-    this.recuperarTokenDecodificado();
-
+    this.recuperarSessao();
   }
 
   setToken(token: string) {
-    this.token = token;
-    sessionStorage.setItem('token', this.token);
+    sessionStorage.setItem('token', token);
   }
 
-  resetToken() {
-    this.token = '';
-    sessionStorage.setItem('token', this.token);
+  getToken(): string | null {
+    return sessionStorage.getItem('token');
   }
 
-  getToken() {
-    return this.token;
+  setTokenDecodificado(dados: DadoToken) {
+    sessionStorage.setItem('tokenDecodificado', JSON.stringify(dados));
+    this.usuarioLogado.set(dados); // Atualiza o signal
   }
 
-  setTokenDecodificado(dadoToken: DadoToken) {
-    this.dadosTokenSource.next(dadoToken);
-    this.tokenDecodificado = dadoToken;
-    sessionStorage.setItem(
-      'tokenDecodificado',
-      JSON.stringify(this.tokenDecodificado)
-    );
-  }
-
-  recuperarToken(){
-    const token = sessionStorage.getItem('token');
-    if (token !== null) {
-      this.token = token;
+  private recuperarSessao() {
+    const dados = sessionStorage.getItem('tokenDecodificado');
+    if (dados) {
+      this.usuarioLogado.set(JSON.parse(dados));
     }
   }
 
-  recuperarTokenDecodificado(){
-    const tokenDecodificado = sessionStorage.getItem('tokenDecodificado');
-    if (tokenDecodificado !== null) {
-      this.tokenDecodificado = JSON.parse(tokenDecodificado);
-      this.dadosTokenSource.next(this.tokenDecodificado!);
-    }
+  logout() {
+    sessionStorage.clear();
+    this.carrinhoService.limparCarrinho();
+    this.usuarioLogado.set(null);
   }
 }

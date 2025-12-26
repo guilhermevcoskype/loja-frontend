@@ -1,27 +1,47 @@
-<main>
-  <div class="container mt-5">
-    <img class="container mt-3" src="../../../assets/imagens/banner-loja.png" alt="banner principal da loja">
+<section class="animate-fade-in">
+  
+  <div class="container mb-5">
+    <div class="banner-wrapper shadow-lg rounded-4 overflow-hidden">
+      <img src="assets/imagens/banner-loja.png" 
+           alt="Banner principal" 
+           class="img-fluid w-100 banner-img">
+    </div>
   </div>
 
-  <div class="container-fluid" *ngIf="listProdutos.length > 0;else semProdutos">
-
-    <div class="container text-center mt-3">
-      <h1>Ultimos lançamentos</h1>
+  <div class="container">
+    <div class="text-center mb-5">
+      <h1 class="display-5 fw-bold text-dark">Últimos Lançamentos</h1>
+      <div class="underline-title mx-auto"></div>
     </div>
-    <div class="container mb-3">
-      <div class="row justify-content-center card-text text-info">
-        <app-produtos
-          *ngFor="let produto of listProdutos | paginate: { currentPage: paginaAtual, itemsPerPage: itemsPerPage, totalItems: totalProdutos } let i = index"
-          [produto]="produto" class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12">
-        </app-produtos>
-        <pagination-controls previousLabel="Anterior" nextLabel="Proximo" [responsive]="true"
-          (pageChange)="handlePageChange($event)"></pagination-controls>
+
+    @if (listProdutos.length > 0) {
+      <div class="row g-4 justify-content-center">
+        @for (produto of listProdutos | paginate: { 
+            currentPage: paginaAtual, 
+            itemsPerPage: itemsPerPage, 
+            totalItems: totalProdutos 
+          }; track produto.id) {
+          
+          <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+            <app-produtos [produto]="produto" class="h-100"></app-produtos>
+          </div>
+        }
       </div>
-    </div>
+
+      <div class="d-flex justify-content-center mt-5">
+        <pagination-controls 
+          previousLabel="Anterior" 
+          nextLabel="Próximo" 
+          [responsive]="true"
+          (pageChange)="handlePageChange($event)"
+          class="my-pagination">
+        </pagination-controls>
+      </div>
+
+    } @else {
+      <div class="text-center py-5">
+        <h2 class="text-muted">Ops! Sem produtos disponíveis.</h2>
+      </div>
+    }
   </div>
-  <ng-template #semProdutos>
-    <div class="container mt-3">
-      <h1>Sem produtos disponíveis</h1>
-    </div>
-  </ng-template>
-</main>
+</section>

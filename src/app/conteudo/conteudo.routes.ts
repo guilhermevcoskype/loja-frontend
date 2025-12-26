@@ -5,6 +5,7 @@ import { CadastroProdutoComponent } from "./cadastro-produto/cadastro-produto.co
 import { CadastroUsuarioComponent } from "./cadastro-usuario/cadastro-usuario.component";
 import { CarrinhoComponent } from "./carrinho/carrinho.component";
 import { LoginComponent } from "./login/login.component";
+import { adminGuard } from "../guards/auth.guard";
 
 export const CONTEUDO_ROUTES: Routes = [
   {
@@ -26,7 +27,8 @@ export const CONTEUDO_ROUTES: Routes = [
   },
   {
     path: 'cadastroProduto',
-    component: CadastroProdutoComponent
+    component: CadastroProdutoComponent,
+    canActivate: [adminGuard]
   },
   {
     path: 'buscaProduto',

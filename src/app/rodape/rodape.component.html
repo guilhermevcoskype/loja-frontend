@@ -1,19 +1,43 @@
-<section class="bg-dark text-white texto-rodapé pt-3 mt-auto">
+<footer class="bg-dark text-light py-5 mt-auto border-top border-secondary">
   <div class="container">
+    <div class="row gy-4">
+
+      <div class="col-md-4">
+        <h5 class="text-info fw-bold mb-3">Projeto BestStore</h5>
+        <p class="text-secondary small">
+          Este projeto faz parte do meu portfólio de desenvolvimento Full Stack,
+          demonstrando competências em Angular 19, UI/UX com Bootstrap e
+          integração de APIs RESTful Java, Springboot e SQL.
+        </p>
+      </div>
+
+
+      <div class="col-md-8 text-md-end">
+        <h5 class="mb-3">Contatos</h5>
+        <div class="d-flex justify-content-md-end gap-3">
+          <a title="GitHub" href="https://github.com/guilhermevcoskype" target="_blank" class="text-light fs-4">
+            <fa-icon [icon]="faGithub"></fa-icon>
+          </a>
+          <a title="LinkedIn" href="https://www.linkedin.com/in/guilherme-vale-oliveira-dev/" target="_blank"
+            class="text-light fs-4">
+            <fa-icon [icon]="faLinkedin"></fa-icon>
+          </a>
+          <a title="E-mail" href="mailto:guilhermevcoskype@gmail.com" class="text-light fs-4">
+            <fa-icon [icon]="faEnvelope"></fa-icon>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <hr class="my-4 border-secondary">
+
     <div class="row">
-      <article class="col-sm ">
-        <h4>Desenvolvedor</h4>
-        <p class="">Guilherme do Vale Castro Oliveira</p>
-        <p class="">Telefone: (XX) X XXXX-XXXX</p>
-      </article>
-      <article class="col-sm text">
-        <h4>Sobre o site</h4>
-        <p class="">Este site é de ultilização destinada ao incremento
-          do portifólio</p>
-        <p class=" ">Utilizados conhecimentos obtidos através de
-          estudos de HTML, CSS, Java, Bootstrap, Javascript, Typesript, Angular, SpringBoot, Banco de dados e edição de
-          imagem</p>
-      </article>
+      <div class="col text-center">
+        <p class="mb-0 text-secondary small">
+          &copy; {{ anoAtual() }} - Desenvolvido por <strong>Guilherme do Vale</strong>.
+        </p>
+      </div>
     </div>
   </div>
-</section>
+</footer>

@@ -1,0 +1,30 @@
+.admin-container {
+  min-height: 80vh;
+  background-color: #f4f7f6;
+}
+
+.preview-box {
+  height: 200px;
+  border-style: dashed !important;
+  border-width: 2px !important;
+}
+
+.preview-box img {
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* Reutilizando seu efeito de escala favorito */
+.transition-hover {
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.transition-hover:hover:not(:disabled) {
+  transform: scale(1.05);
+}
+
+.form-control:focus, .form-select:focus {
+  background-color: #fff !important;
+  box-shadow: 0 0 0 0.25rem rgba(13, 202, 240, 0.15);
+  border: 1px solid #0dcaf0 !important;
+}
