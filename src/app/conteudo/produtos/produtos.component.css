@@ -1,18 +1,44 @@
-.card-borda {
-	border: none;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+:host {
+  display: block;
+  height: 100%;
 }
 
-.card-borda * {
-	text-align: center;
-  ;
+.product-card {
+  background-color: #fff;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.product-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  shadow: 0 1rem 3rem rgba(0,0,0,.175) !important;
+}
+
+.img-container {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.card-img-top {
+  max-height: 100%;
+  transition: transform 0.5s ease;
+}
+
+.product-card:hover .card-img-top {
+  transform: scale(1.1);
 }
 
 .card-title {
-	font-family: 'Varela Round', sans-serif;
-	height: 2rem;
-	font-weight: bold;
+  font-family: 'Varela Round', sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.4;
+  height: 3rem; /* Mantém o alinhamento mesmo com nomes diferentes */
+  overflow: hidden;
+}
+
+/* Estilo para a badge do Bootstrap 5.3 */
+.bg-info-subtle {
+  background-color: #cff4fc;
 }

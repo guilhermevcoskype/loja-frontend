@@ -1,8 +1,34 @@
-#login  #login-row #login-column #login-box {
-	border: 1px solid #9C9C9C;
-	background-color: #EAEAEA;
+.login-container {
+  flex: 1; 
+  display: flex;
+  align-items: center; /* Centraliza verticalmente */
+  justify-content: center; /* Centraliza horizontalmente */
+  background-color: #f4f7f6; /* Agora vai cobrir todo o espaço */
+  padding: 2rem 0; /* Garante um respiro para não encostar no rodapé em telas pequenas */
 }
 
-#login  #login-row #login-column #login-box #login-form {
-	padding: 20px;
+.card {
+  transition: transform 0.3s ease;
+}
+
+/* Efeito sutil no input ao focar */
+.form-control:focus {
+  background-color: #fff !important;
+  box-shadow: 0 0 0 0.25rem rgba(13, 202, 240, 0.25);
+  border: 1px solid #0dcaf0 !important;
+}
+
+/* Reutilizando seu aprendizado de escala no botão */
+.transition-hover {
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.transition-hover:hover:not(:disabled) {
+  transform: scale(1.03);
+  filter: brightness(1.1);
+}
+
+.btn-link:hover {
+  color: #0aa2c0 !important;
+  text-decoration: underline !important;
 }

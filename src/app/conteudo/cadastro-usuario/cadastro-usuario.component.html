@@ -1,24 +1,59 @@
-<main>
+<section class="register-container d-flex align-items-center justify-content-center animate-fade-in w-100">
   <div class="container">
-    <h1 class="titulos">Cadastro de usuário</h1>
-    <form [formGroup]="formulario">
-      <div class="form-group">
-        <label for="email">Endereço de email</label>
-        <input type="email" class="form-control" id="email" formControlName="nome" aria-describedby="emailHelp"
-          placeholder="Seu email" required="required"> <small id="emailHelp" class="form-text text-muted"
-          *ngIf="formulario.get('nome')?.errors?.['required'] && formulario.get('nome')?.touched">O campo é
-          obrigatório.</small>
+    <div class="row justify-content-center">
+      <div class="col-11 col-sm-8 col-md-6 col-lg-4">
+        
+        <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+          <div class="card-header bg-dark text-white text-center py-4 border-0">
+            <h3 class="mb-0 fw-bold">Criar Conta</h3>
+            <small class="text-info">Junte-se à BestStore</small>
+          </div>
+
+          <div class="card-body p-4 p-md-5 bg-white">
+            <form [formGroup]="formulario" (ngSubmit)="enviar()">
+              
+              <div class="mb-3">
+                <label for="email" class="form-label fw-semibold text-secondary">E-mail</label>
+                <input type="email" formControlName="nome" id="email" 
+                       class="form-control form-control-lg bg-light border-0" 
+                       placeholder="seu@email.com"
+                       [class.is-invalid]="formulario.get('nome')?.invalid && formulario.get('nome')?.touched">
+                
+                @if (formulario.get('nome')?.errors?.['required'] && formulario.get('nome')?.touched) {
+                  <div class="invalid-feedback">O e-mail é obrigatório.</div>
+                }
+              </div>
+
+              <div class="mb-4">
+                <label for="senha" class="form-label fw-semibold text-secondary">Senha</label>
+                <input type="password" formControlName="senha" id="senha" 
+                       class="form-control form-control-lg bg-light border-0" 
+                       placeholder="Mínimo 3 caracteres"
+                       [class.is-invalid]="formulario.get('senha')?.invalid && formulario.get('senha')?.touched">
+                
+                @if (formulario.get('senha')?.errors?.['required'] && formulario.get('senha')?.touched) {
+                  <div class="invalid-feedback">A senha é obrigatória.</div>
+                }
+              </div>
+
+              <button type="submit" 
+                      class="btn btn-info btn-lg w-100 text-white fw-bold shadow-sm transition-hover" 
+                      [disabled]="formulario.invalid">
+                Cadastrar
+              </button>
+            </form>
+
+            <div class="text-center mt-4">
+              <p class="text-muted small">Já possui uma conta?</p>
+              <button routerLink="/conteudo/login" 
+                      class="btn btn-link text-info text-decoration-none fw-bold p-0">
+                Voltar para o Login
+              </button>
+            </div>
+          </div>
+        </div>
+
       </div>
-      <div class="form-group">
-        <label for="senha">Senha</label>
-        <input type="password" class="form-control" id="senha" formControlName="senha" aria-describedby="passwordHelp"
-          placeholder="Senha" required="required"><small id="passwordHelp" class="form-text text-muted"
-          *ngIf="formulario.get('senha')?.errors?.['required'] && formulario.get('senha')?.touched">O campo é
-          obrigatório.</small>
-      </div>
-      <div class="form-inline pt-3">
-        <button (click)="enviar()" [disabled]="!formulario.valid" [ngClass]="habilitarBotao()">Enviar</button>
-      </div>
-    </form>
+    </div>
   </div>
-</main>
+</section>

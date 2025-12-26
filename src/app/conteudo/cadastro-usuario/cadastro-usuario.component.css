@@ -1,0 +1,30 @@
+.register-container {
+  flex: 1; 
+  display: flex;
+  align-items: center; /* Centraliza verticalmente */
+  justify-content: center; /* Centraliza horizontalmente */
+  background-color: #f4f7f6; /* Agora vai cobrir todo o espaço */
+  padding: 2rem 0; /* Garante um respiro para não encostar no rodapé em telas pequenas */
+}
+
+/* Reutilizando o efeito de escala */
+.transition-hover {
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.transition-hover:hover:not(:disabled) {
+  transform: scale(1.03);
+  filter: brightness(1.1);
+}
+
+.form-control:focus {
+  background-color: #fff !important;
+  box-shadow: 0 0 0 0.25rem rgba(13, 202, 240, 0.25);
+  border: 1px solid #0dcaf0 !important;
+}
+
+/* Estilo para erros de validação do Bootstrap */
+.invalid-feedback {
+  font-size: 0.8rem;
+  font-weight: bold;
+}

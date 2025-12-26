@@ -1,45 +1,29 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Produto } from 'src/app/conteudo/model/produto';
 import { CarrinhoItem } from '../model/carrinhoItem';
 import { CarrinhoService } from '../service/carrinho.service';
 import { EllipsifyPipe } from '../../shared/ellipsify.pipe';
-import { UpperCasePipe, CurrencyPipe } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-    selector: 'app-produtos',
-    templateUrl: './produtos.component.html',
-    styleUrls: ['./produtos.component.css'],
-    standalone: true,
-    imports: [
-        UpperCasePipe,
-        CurrencyPipe,
-        EllipsifyPipe,
-    ],
+  selector: 'app-produtos',
+  standalone: true,
+  imports: [CurrencyPipe, EllipsifyPipe, FontAwesomeModule],
+  templateUrl: './produtos.component.html',
+  styleUrls: ['./produtos.component.css']
 })
-
 export class ProdutosComponent {
-  @Input() produto: Produto = {
-    id: 0,
+  private carrinhoService = inject(CarrinhoService);
+  private router = inject(Router);
 
-    descricao: "",
+  @Input({ required: true }) produto!: Produto;
+  
+  faCartPlus = faCartPlus;
 
-    estoque: 0,
-
-    preco: 0,
-
-    dataInsercao: new Date(),
-
-    urlImagem: "",
-
-    tipoProduto: ""
-  };
-
-  constructor(private carrinhoService: CarrinhoService,
-    private router: Router){
-  }
-
-  addCarrinho(){
+  addCarrinho() {
     this.carrinhoService.aumentarQuantidadeItem(new CarrinhoItem(this.produto, 0));
     this.router.navigate(['/conteudo/carrinho']);
   }

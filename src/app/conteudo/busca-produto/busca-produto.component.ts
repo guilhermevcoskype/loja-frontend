@@ -1,112 +1,75 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, effect } from '@angular/core';
 import { Produto } from '../model/produto';
-import { ActivatedRoute } from '@angular/router';
 import { ProdutoService } from '../service/produto.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { MessageModalComponent } from 'src/app/shared/componentes/message-modal/message-modal.component';
 import { BuscaService } from '../service/busca.service';
-import { Subscription } from 'rxjs';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ProdutosComponent } from '../produtos/produtos.component';
-import { NgIf, NgFor } from '@angular/common';
+import { LowerCasePipe } from '@angular/common';
+
 
 @Component({
-    selector: 'app-busca-produto',
-    templateUrl: './busca-produto.component.html',
-    styleUrls: ['./busca-produto.component.css'],
-    standalone: true,
-    imports: [
-        NgIf,
-        NgFor,
-        ProdutosComponent,
-        NgxPaginationModule,
-    ],
+  selector: 'app-busca-produto',
+  standalone: true,
+  imports: [ProdutosComponent, NgxPaginationModule, LowerCasePipe],
+  templateUrl: './busca-produto.component.html',
+  styleUrls: ['./busca-produto.component.css']
 })
-export class BuscaProdutoComponent implements OnInit, OnDestroy {
+export class BuscaProdutoComponent implements OnInit {
+  private produtoService = inject(ProdutoService);
+  protected buscaService = inject(BuscaService);
+
   listProdutos: Produto[] = [];
-  busca: string = ""
-  private modalService!: NgbModal;
-  produtoSubscription!: Subscription;
+  paginaAtual = 1;
+  totalProdutos = 0;
+  itemsPerPage = 0;
 
-  paginaAtual: number = 1;
-  itemsPerPage: number = 0;
-  totalProdutos: number = 0;
-  currentIndex = -1;
-
-  constructor(
-    private route: ActivatedRoute,
-    private readonly produtoService: ProdutoService,
-    private buscaService: BuscaService
-  ) {
-    this.route.paramMap.subscribe((params) => {
-      this.busca = history.state.busca;
+  constructor() {
+    // O effect reage automaticamente sempre que o termo ou tipo mudar no serviço
+    effect(() => {
+      const termo = this.buscaService.termoBusca();
+      const tipo = this.buscaService.tipoBusca();
+      
+      this.paginaAtual = 1; // Reseta a página ao mudar o filtro
+      
+      if (tipo) {
+        this.buscarPorTipo();
+      } else {
+        this.buscarPorTexto();
+      }
     });
   }
 
-  buscarProduto() {
-    this.produtoSubscription = this.produtoService
-      .buscarProduto(this.busca, this.paginaAtual)
+  ngOnInit(): void {}
+
+  buscarPorTexto() {
+    this.produtoService.buscarProduto(this.buscaService.termoBusca(), this.paginaAtual - 1)
       .subscribe({
-        next: (page) => {
-          this.listProdutos = page.content;
-          this.totalProdutos = page.totalElements;
-          this.itemsPerPage = page.size;
-        },
-        error: (erro) => {
-          console.log(erro);
-        },
+        next: (page) => this.mapearPagina(page),
+        error: (err) => console.error(err)
       });
   }
 
-  buscarPorTipoProduto() {
-    this.produtoSubscription = this.produtoService
-      .buscarProdutoPorTipo(this.busca, this.paginaAtual)
+  buscarPorTipo() {
+    this.produtoService.buscarProdutoPorTipo(this.buscaService.tipoBusca(), this.paginaAtual - 1)
       .subscribe({
-        next: (page) => {
-          this.listProdutos = page.content;
-          this.totalProdutos = page.totalElements;
-          this.itemsPerPage = page.size;
-        },
-        error: (erro) => {
-          console.log(erro);
-        },
+        next: (page) => this.mapearPagina(page),
+        error: (err) => console.error(err)
       });
   }
 
-  ngOnDestroy(): void {
-    if (this.produtoSubscription) this.produtoSubscription.unsubscribe();
-  }
-
-  openModal(message: string, titulo: string) {
-    const modalRef = this.modalService.open(MessageModalComponent);
-    modalRef.componentInstance.message = message;
-    modalRef.componentInstance.titulo = titulo;
+  private mapearPagina(page: any) {
+    this.listProdutos = page.content;
+    this.totalProdutos = page.totalElements;
+    this.itemsPerPage = page.size;
   }
 
   handlePageChange(event: number): void {
     this.paginaAtual = event;
-    this.buscarProduto();
-  }
-
-  ngOnInit(): void {
-    this.buscaService.busca.subscribe({
-      next: (response) => {
-        this.busca = response;
-        this.buscarProduto();
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
-    this.buscaService.buscaTipoProduto.subscribe({
-      next: (response) => {
-        this.busca = response;
-        this.buscarPorTipoProduto();
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
-    this.buscarProduto();
+    if (this.buscaService.tipoBusca()) {
+      this.buscarPorTipo();
+    } else {
+      this.buscarPorTexto();
+    }
+    window.scrollTo(0, 0);
   }
 }

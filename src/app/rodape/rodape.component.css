@@ -1,3 +1,27 @@
-.texto-rodapé {
-	font-family: 'Varela Round', sans-serif;
+footer {
+  /* Garante que o fundo escuro tenha uma textura profissional */
+  background: linear-gradient(180deg, #212529 0%, #1a1d20 100%);
+}
+
+.hover-info:hover {
+  color: #0dcaf0 !important; /* Cor info do Bootstrap */
+  transition: 0.3s;
+  padding-left: 5px;
+}
+
+fa-icon {
+  /* Transição suave para a escala e para a cor */
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.3s ease;
+  cursor: pointer;
+  display: inline-block; /* Importante para que o transform funcione corretamente */
+}
+
+fa-icon:hover {
+  /* Aumenta o tamanho em 25% (1.25) */
+  transform: scale(1.25);
+  color: #0dcaf0;
+}
+
+strong {
+  color: #fff;
 }

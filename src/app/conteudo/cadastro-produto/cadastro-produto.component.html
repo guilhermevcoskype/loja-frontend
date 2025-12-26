@@ -1,71 +1,91 @@
-<main class="container mt-5 mb-3">
-  <div class="container text-center mt-3">
-    <h1>Cadastro de Produtos da loja</h1>
+<section class="admin-container py-5 animate-fade-in">
+  <div class="container">
+    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+      
+      <div class="card-header bg-dark text-white py-4 text-center">
+        <h2 class="fw-bold mb-0">Gestão de Inventário</h2>
+        <small class="text-info">Adicionar novo produto à loja</small>
+      </div>
+
+      <div class="card-body p-4 p-md-5 bg-white">
+        <form [formGroup]="formulario" (ngSubmit)="cadastrar()">
+          
+          <div class="row g-4">
+            <div class="col-md-7">
+              <div class="mb-3">
+                <label class="form-label fw-bold">Descrição do Produto</label>
+                <textarea formControlName="descricao" class="form-control bg-light border-0" rows="3" placeholder="Ex: Camiseta Algodão Egípcio Premium"></textarea>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label fw-bold">Categoria</label>
+                  <select formControlName="tipoProduto" class="form-select bg-light border-0">
+                    <option value="" disabled>Selecione...</option>
+                    <option value="camisa">Camisa</option>
+                    <option value="livro">Livro</option>
+                    <option value="geral">Geral</option>
+                  </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label fw-bold">Estoque Inicial</label>
+                  <input type="number" formControlName="estoque" class="form-control bg-light border-0" placeholder="0">
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-bold">Preço de Venda</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-light border-0 fw-bold">R$</span>
+                  <input currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',' }" 
+                         formControlName="preco" class="form-control bg-light border-0 fs-5">
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-5">
+              <div class="p-4 border rounded-4 bg-light h-100">
+                <label class="form-label fw-bold d-block mb-3">Imagem do Produto</label>
+                
+                <div class="d-flex gap-3 mb-4">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="selectedOption" id="optFile" 
+                           value="arquivo" [(ngModel)]="selectedOption" [ngModelOptions]="{standalone: true}" (change)="onOptionChange()">
+                    <label class="form-check-label" for="optFile">Upload</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="selectedOption" id="optUrl" 
+                           value="url" [(ngModel)]="selectedOption" [ngModelOptions]="{standalone: true}" (change)="onOptionChange()">
+                    <label class="form-check-label" for="optUrl">Link URL</label>
+                  </div>
+                </div>
+
+                @if (selectedOption === 'arquivo') {
+                  <input type="file" #fileInput (change)="onFileChange($event)" class="form-control mb-3">
+                } @else {
+                  <input type="text" formControlName="urlImagem" class="form-control mb-3" placeholder="https://imagem.com/foto.jpg">
+                }
+
+                <div class="preview-box rounded border d-flex align-items-center justify-content-center bg-white overflow-hidden shadow-sm">
+                  @if (selectedImage || formulario.get('urlImagem')?.value) {
+                    <img [src]="selectedImage || formulario.get('urlImagem')?.value" class="img-fluid">
+                  } @else {
+                    <span class="text-muted small">Sem imagem</span>
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-5 text-center">
+            <button type="submit" [disabled]="formulario.invalid" 
+                    class="btn btn-dark btn-lg px-5 fw-bold transition-hover shadow">
+              Concluir Cadastro
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
   </div>
-  <form [formGroup]="formulario">
-    <div class="form-group row pt-1">
-      <label class="col-sm-2 col-form-label" for="tipoProduto">Tipo
-        do Produto</label>
-      <div class="col-sm-10">
-        <select class="form-control" id="tipoProduto" formControlName="tipoProduto">
-          <option value="" disabled selected>Selecione uma opção</option>
-          <option value="camisa">Camisa</option>
-          <option value="livro">Livro</option>
-          <option value="geral">Geral</option>
-        </select>
-      </div>
-    </div>
-    <div class="form-group row  pt-1">
-      <label for="descricao" class="col-sm-2 col-form-label">Descricao</label>
-      <div class="col-sm-10">
-        <textarea cols="30" rows="7" maxlength="54" required class="form-control" id="descricao"
-          formControlName="descricao" placeholder="Descricao do produto"></textarea>
-      </div>
-    </div>
-    <div class="form-group row  pt-1">
-      <label for="estoque" class="col-sm-2 col-form-label">Estoque</label>
-      <div class="col-sm-3">
-        <input type="number" min="0" max="1000" class="form-control" id="estoque" formControlName="estoque"
-          placeholder="Quantidade do produto">
-      </div>
-    </div>
-    <div class="form-group row  pt-1">
-      <label for="preco" class="col-sm-2 col-form-label">Preço</label>
-      <div class="col-sm-3">
-        <input class="form-control text-md-start" id="preco" currencyMask formControlName="preco"
-          [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" required placeholder="Preço do produto">
-      </div>
-    </div>
-
-    <div class="btn-group container-fluid text-center pt-4" data-toggle="buttons">
-
-      <div class="btn text-sm-start col-sm-6">
-        <div class="col-sm-6">
-          <input type="radio" class=" text-start" value="arquivo" [(ngModel)]="selectedOption"
-            [ngModelOptions]="{standalone: true}" name="options" id="option1" autocomplete="off"
-            (ngModelChange)="onOptionChange()" checked>Escolha uma imagem
-          <input type="file" class="form-control-file text-sm-start" id="fileInput" #fileInput
-            (change)="onFileChange($event)">
-        </div>
-        <div *ngIf="selectedImage" class="col-sm-6">
-          <img [src]="selectedImage" alt="Imagem selecionada" class="card-posicao-imagem">
-        </div>
-      </div>
-
-      <div class="btn text-sm-start col-sm-6">
-        <input type="radio" class="text-start" value="url" [(ngModel)]="selectedOption"
-          [ngModelOptions]="{standalone: true}" name="options" id="option2" autocomplete="off"
-          (ngModelChange)="onOptionChange()">Digite o link de uma imagem
-        <input type="text" class="form-control" id="imageLinkInput" formControlName="urlImagem">
-      </div>
-
-    </div>
-
-
-    <div class="form-group row  pt-4 text-center">
-      <div class="">
-        <button class="btn btn-primary" (click)="cadastrar()">cadastrar</button>
-      </div>
-    </div>
-  </form>
-</main>
+</section>

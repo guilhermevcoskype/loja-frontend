@@ -1,0 +1,34 @@
+.banner-wrapper {
+  transition: transform 0.5s ease;
+}
+
+.banner-img {
+  max-height: 400px;
+  object-fit: fill;
+}
+
+.underline-title {
+  width: 80px;
+  height: 4px;
+  background-color: #0dcaf0;
+  border-radius: 2px;
+}
+
+/* Customizando o componente de paginação para combinar com o tema */
+.my-pagination ::ng-deep .ngx-pagination .current {
+  background: #0dcaf0 !important;
+  border-radius: 50%;
+  padding: 6px 12px;
+}
+
+.my-pagination ::ng-deep .ngx-pagination a:hover {
+  background: #e9ecef !important;
+  border-radius: 50%;
+  color: #0dcaf0 !important;
+  text-decoration: none;
+}
+
+.my-pagination ::ng-deep .ngx-pagination .pagination-previous a::before,
+.my-pagination ::ng-deep .ngx-pagination .pagination-next a::after {
+  display: none !important; /* Remove setas padrão se quiser algo mais limpo */
+}

@@ -1,30 +1,38 @@
-html, body {
-  height: 100%;
+:root {
+  --primary-color: #17a2b8; /* Cor info do bootstrap */
 }
 
-button:hover {
-  transform: scale(1.1);
-  font-weight: bold;
+/* Transições suaves */
+.nav-link, .btn, a {
+  transition: all 0.2s ease-in-out;
 }
 
-a:hover {
-  transform: scale(1.1);
-  font-weight: bold;
+/* Hover mais elegante em vez de escala bruta */
+.nav-link:hover {
+  color: var(--primary-color) !important;
+  opacity: 0.8;
 }
 
-.nohover:hover {
-  transform: initial;
-  font-weight: initial;
+/* Melhoria no input de busca */
+.search_input {
+  border-radius: 20px 0 0 20px !important;
+  border: 1px solid #ced4da;
 }
 
-.card-posicao-imagem {
-	object-fit: cover;
-	height: 250px;
+.search_icon {
+  border-radius: 0 20px 20px 0 !important;
 }
 
-h1 {
-	font-weight: bold;
-	color: red;
-	opacity: 0.7;
-  position: relative;
+/* Ajuste para o conteúdo não ficar escondido sob o header fixo */
+body {
+  padding-top: 105px; /* Ajuste conforme a altura do seu header */
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

@@ -1,55 +1,85 @@
-<main class="container">
-  <div class="container text-center mt-3 pt-3">
-    <h1>Carrinho</h1>
+<main class="container py-5 animate-fade-in">
+  <div class="text-center mb-5">
+    <h1 class="display-4 fw-bold text-dark">
+      <fa-icon [icon]="faCartShopping" class="me-2 text-info"></fa-icon>Seu Carrinho
+    </h1>
+    <div class="underline-title mx-auto"></div>
   </div>
-  <table *ngIf="carrinho.carrinhoItens != null && carrinho.getQuantidadeTotal() != 0; else carrinhoVazio"
-    class="container mt-5 mb-5 table-striped">
-    <thead>
-      <tr class="tamanho-linha-carrinho border ml-1">
-        <th scope="col" class=" text-center"><span>Produto</span></th>
-        <th scope="col" class="  text-center"><span></span></th>
-        <th scope="col" class="  text-center"><span>Quantidade</span>
-        <th scope="col" class="  text-center"><span>Preço</span></th>
-        <th scope="col" class="  text-center"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr class="tamanho-linha-carrinho border ml-1" *ngFor="let carrinhoItem of mapItensKeys">
-        <th scope="row" class="  text-center"><img class="card-largura card-img-top card-posicao-imagem"
-            src={{carrinhoItem.produto.urlImagem}} onError="this.src='../../../assets/imagens/produto sem imagem.png'">
-        </th>
-        <td class="  text-center">{{carrinhoItem.produto.descricao}}</td>
-        <td class="  text-center">
-          <div class="btn-group inline" role="group">
-            <button title="diminuir" class="btn btn-lihgt border"
-              (click)="diminuirQuantidadeItem(carrinhoItem)">-</button>
-            <button type="text" title="quantidade" class="btn "
-              disabled>{{carrinho.getQuantidadeItem(carrinhoItem)}}</button>
-            <button title="aumentar" class="btn btn-lihgt border"
-              (click)="aumentarQuantidadeItem(carrinhoItem)">+</button>
-          </div>
-        <td class="  text-center">
-          {{carrinhoItem.getPrecoTotal(carrinho.getQuantidadeItem(carrinhoItem)) | currency: 'BRL'}}
 
-        </td>
-        <td class="  text-center">
-          <button title="remover" class="btn btn-dark" (click)="removerItem(carrinhoItem)">remover</button>
-        </td>
-      </tr>
-    </tbody>
-    <tfoot class="tamanho-linha-carrinho border ml-1">
-      <tr>
-        <th class="  text-center">Total</th>
-        <td></td>
-        <td class="  text-center">{{carrinho.getQuantidadeTotal()}}</td>
-        <td class="  text-center">{{carrinho.getPrecoTotal() | currency: 'BRL'}}</td>
-        <td class="  text-right pr-1">
-          <button title="finalizar" class="btn btn-dark" (click)="finalizar()">Finalizar</button>
-        </td>
-      </tr>
-    </tfoot>
-  </table>
-  <ng-template #carrinhoVazio>
-    <h3 class="text-center titulos">Seu carrinho está vazio</h3>
-  </ng-template>
+  @if (itens().length > 0) {
+    <div class="table-responsive shadow-lg rounded-4 border-0 overflow-hidden">
+      <table class="table table-hover align-middle mb-0 bg-white">
+        <thead class="bg-dark text-white">
+          <tr>
+            <th scope="col" class="ps-4 py-3 border-0">Produto</th>
+            <th scope="col" class="border-0">Descrição</th>
+            <th scope="col" class="text-center border-0">Quantidade</th>
+            <th scope="col" class="text-center border-0">Subtotal</th>
+            <th scope="col" class="text-center border-0">Ação</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of itens(); track item.produto.id) {
+            <tr>
+              <td class="ps-4">
+                <img [src]="item.produto.urlImagem" 
+                     (error)="$any($event.target).src='assets/imagens/produto sem imagem.png'"
+                     class="img-thumbnail cart-img rounded-3" 
+                     alt="Produto">
+              </td>
+              <td>
+                <span class="fw-bold text-dark d-block">{{ item.produto.descricao }}</span>
+                <small class="text-muted">Preço unitário: {{ item.produto.preco | currency: 'BRL' }}</small>
+              </td>
+              <td class="text-center">
+                <div class="btn-group btn-group-sm border rounded-pill overflow-hidden shadow-sm">
+                  <button class="btn btn-light border-0 px-3" (click)="diminuir(item)">
+                    <fa-icon [icon]="faMinus"></fa-icon>
+                  </button>
+                  <span class="btn btn-white border-0 px-3 fw-bold disabled bg-white">
+                    {{ item.quantidade }}
+                  </span>
+                  <button class="btn btn-light border-0 px-3" (click)="aumentar(item)">
+                    <fa-icon [icon]="faPlus"></fa-icon>
+                  </button>
+                </div>
+              </td>
+              <td class="text-center fw-bold text-dark">
+                {{ (item.produto.preco * item.quantidade) | currency: 'BRL' }}
+              </td>
+              <td class="text-center">
+                <button class="btn btn-link text-danger p-0 scale-hover" (click)="remover(item)">
+                  <fa-icon [icon]="faTrash" size="lg"></fa-icon>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+        <tfoot class="table-light">
+          <tr class="fs-5 fw-bold">
+            <td colspan="2" class="ps-4 py-4">Total da Compra</td>
+            <td class="text-center text-muted">{{ totalQuantidade() }} itens</td>
+            <td class="text-center text-info">{{ totalPreco() | currency: 'BRL' }}</td>
+            <td class="text-center">
+              <button class="btn btn-info text-white w-100 py-2 shadow-sm fw-bold rounded-pill transition-hover" (click)="finalizar()">
+                Finalizar Compra
+              </button>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  } @else {
+    <div class="text-center py-5 bg-white rounded-4 shadow-sm border">
+      <div class="mb-4 text-info opacity-25">
+        <fa-icon [icon]="faCartShopping" size="6x"></fa-icon>
+      </div>
+      <h2 class="text-dark fw-bold">Opa! Seu carrinho está vazio</h2>
+      <p class="text-muted mb-4">Você ainda não escolheu nenhum produto incrível.</p>
+      <button class="btn btn-info btn-lg text-white px-5 rounded-pill fw-bold shadow transition-hover" 
+              routerLink="/conteudo/uLancamentos">
+        Explorar Produtos
+      </button>
+    </div>
+  }
 </main>
