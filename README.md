@@ -51,7 +51,17 @@ Demonstrar a criação de uma aplicação de e-commerce moderna utilizando Angul
 
 <div align="center">
 
-![Demo da Loja](https://private-user-images.githubusercontent.com/53445308/266747008-92b193f2-c92c-4855-9b23-278de3a2e059.gif?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjY3ODAwNjQsIm5iZiI6MTc2Njc3OTc2NCwicGF0aCI6Ii81MzQ0NTMwOC8yNjY3NDcwMDgtOTJiMTkzZjItYzkyYy00ODU1LTliMjMtMjc4ZGUzYTJlMDU5LmdpZj9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTEyMjYlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUxMjI2VDIwMDkyNFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTUzM2Q4OTI2OTA1NGFhMmQ5ZTMxMTZhMzE2Y2VlMGNkOWZlYzBhOTkyMmJiZjNhMmY5OWNmMjMxYjgxZTRmZGEmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0._VDrJ9fEUi0WyWBhCBoRzi2syXhxqfSXNH1lYVyY6xo)
+<img width="1905" height="1197" alt="image" src="https://github.com/user-attachments/assets/a0df7b66-e907-4a0a-93de-3d3e54af31b8" />
+
+<img width="1876" height="992" alt="image" src="https://github.com/user-attachments/assets/95142117-f14b-4219-83e8-57361857b843" />
+
+<img width="1907" height="428" alt="image" src="https://github.com/user-attachments/assets/3439525c-a1ce-4d53-96b8-aa8eb9488160" />
+
+<img width="1919" height="992" alt="image" src="https://github.com/user-attachments/assets/2c7a1bf2-a59e-4c5b-be25-a4035f38b8fb" />
+
+<img width="1919" height="995" alt="image" src="https://github.com/user-attachments/assets/26b25bd0-8e5c-4ab6-af88-de51d7f05f2f" />
+
+
 
 *Interface principal da loja com catálogo de produtos e navegação*
 
