@@ -1,70 +1,54 @@
-<section class="text-uppercase">
-  <nav class="navbar navbar-expand-lg navbar-light bg-dark fixed-tops zindex">
-    <div class="container mx-auto">
-      <a class="navbar-brand" routerLink="/"> <img src="../../../assets/imagens/logo-loja.png" alt="Logo loja genérica">
+<header class="fixed-top shadow-sm">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" routerLink="/">
+        <img src="assets/imagens/logo-loja.png" alt="Logo" height="40">
       </a>
-      <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
 
-      <div class="form-busca my-2 my-lg-0 w-50 w-sm-100">
-        <div class="row w-100  m-0 mr-sm-2">
-          <div class="col px-0 left-input-busca bg-white"></div>
-          <input class="col-10 m-0 search_input px-0" placeholder="O que você está buscando?" [formControl]="busca"
-            aria-label="Search">
-          <button class="col-1 search_icon px-0 bg-white nohover" disabled>
-            <fa-icon [icon]="faBusca" class="fas fa-search text-info"></fa-icon>
+      <div class="flex-grow-1 mx-lg-4 d-none d-md-block">
+        <div class="input-group">
+          <input class="form-control search_input" placeholder="O que você busca?" [formControl]="busca">
+          <button class="btn btn-info text-white" type="button">
+            <fa-icon [icon]="faBusca"></fa-icon>
           </button>
         </div>
       </div>
 
-      <div class="alert" *ngIf="mensagemErro">{{mensagemErro}}</div>
-
-      <div class="text-end">
-        <div *ngIf="!logado;else usuarioLogado">
-          <button class="nav-item nav-link text-white align-self-right p-3" (click)="carregarTela('login')">
-            Logar/Registrar </button>
-        </div>
-
-        <ng-template #usuarioLogado>
-          <div class="btn text-white" (mouseover)="isCollapsed = true" (mouseout)="isCollapsed = false"
-            (click)="isCollapsed = ! isCollapsed" [attr.aria-expanded]="!isCollapsed">{{ tokenDecodificado.sub }}
-            <!-- <div #collapse="ngbCollapse" [(ngbCollapse)]="!isCollapsed"> -->
-              <div class="collapse" [ngClass]="{'show': isCollapsed}">
-              <ul class="navbar-nav flex-column">
-                <li *ngIf="tokenDecodificado && tokenDecodificado.roles == 'ADMIN'"><a
-                    class="nav-item nav-link text-white w-auto active" routerLink="/conteudo/cadastroProduto">
-                    <fa-icon [icon]="faBarras" class="fas fa-bars text-info"></fa-icon>
-                    cadastrar
-                  </a></li>
-                <li><a class="nav-item nav-link text-white" routerLink="/conteudo/carrinho">
-                    <fa-icon [icon]="faCarrinho" class="fas fa-shopping-cart text-info h5"></fa-icon>
-                    carrinho
-                  </a></li>
-                <li><button class="btn text-white text-uppercase" (click)="acaoBotaoSair()">Sair</button></li>
-              </ul>
-            </div>
+      <div class="d-flex align-items-center">
+        @if (!logado()) {
+          <button class="btn btn-outline-light btn-sm" (click)="carregarTela('login')">
+            Entrar
+          </button>
+        } @else {
+          <div class="dropdown">
+            <button class="btn btn-dark dropdown-toggle" (click)="isCollapsed.set(!isCollapsed())">
+              {{ tokenDecodificado().sub }}
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end shadow" [class.show]="isCollapsed()">
+              @if (tokenDecodificado().roles === 'ADMIN') {
+                <li><a class="dropdown-item" routerLink="/conteudo/cadastro">Cadastrar</a></li>
+              }
+              <li><a class="dropdown-item" routerLink="/conteudo/carrinho">Carrinho</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><button class="dropdown-item" (click)="acaoBotaoSair()">Sair</button></li>
+            </ul>
           </div>
-        </ng-template>
+        }
       </div>
     </div>
   </nav>
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-tops zindex">
-    <div class="container mx-auto">
-      <p class="navbar-brand">A maior loja do <span class="text-info">Brasil</span></p>
-      <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse pl-4" id="navbarNavAltMarkup2">
-        <ul class="navbar-nav" *ngFor="let tipoProduto of tipoProdutos">
-          <li *ngIf="tipoProduto"><button class="nav-item nav-link"
-              (click)="buscarTipoProduto(tipoProduto)">{{tipoProduto}} </button></li>
-        </ul>
-      </div>
+  <nav class="navbar navbar-expand navbar-light bg-light border-bottom d-none d-sm-block">
+    <div class="container justify-content-center">
+      <ul class="navbar-nav">
+        @for (tipo of tipoProdutos(); track tipo) {
+          <li class="nav-item">
+            <button class="nav-link btn btn-link border-0 py-0" (click)="buscarTipoProduto(tipo)">
+              {{ tipo }}
+            </button>
+          </li>
+        }
+      </ul>
     </div>
   </nav>
-
-</section>
+</header>
