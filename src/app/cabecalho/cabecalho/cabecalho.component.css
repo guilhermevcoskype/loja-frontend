@@ -1,5 +1,5 @@
 .zindex {
-  z-index: 1000;
+	z-index: 1000;
 }
 
 .search_input {
@@ -21,4 +21,9 @@
 	text-decoration: none;
 	border-top-right-radius: 50%;
 	border-bottom-right-radius: 50%;
+}
+
+.logo-custom {
+	height: 50px;
+	width: auto;
 }
