@@ -18,7 +18,7 @@ export class ProdutoService {
     const params = new HttpParams()
       .set('page', page-1)
     return this.httpClient
-      .get(this.API, {params})
+      .get(this.environmentApi, {params})
   }
 
   salvarProduto(formData: FormData): Observable<Produto> {
@@ -26,7 +26,7 @@ export class ProdutoService {
     if (!formData.has('file')) {
       formData.append('file', new Blob());
     }
-    return this.httpClient.post(this.API, formData, {headers})
+    return this.httpClient.post(this.environmentApi, formData, {headers})
       .pipe((response: any) => response);
   }
 
@@ -34,21 +34,21 @@ export class ProdutoService {
     const params = new HttpParams()
       .set('busca', busca)
       .set('page', page-1)
-    return this.httpClient.get<any>(this.API+'/busca', { params });
+    return this.httpClient.get<any>(this.environmentApi+'/busca', { params });
   }
 
   buscarProdutoPorCodigo(codigo: number): Observable<Produto> {
-    return this.httpClient.get<Produto>(this.API+'/'+codigo);
+    return this.httpClient.get<Produto>(this.environmentApi+'/'+codigo);
   }
 
   buscarTiposProduto(): Observable<any>{
-    return this.httpClient.get(this.API+'/tipoProduto');
+    return this.httpClient.get(this.environmentApi+'/tipoProduto');
   }
 
   buscarProdutoPorTipo(tipoProduto: string, page: number): Observable<any>{
     const params = new HttpParams()
       .set('tipoProduto', tipoProduto)
       .set('page', page-1)
-    return this.httpClient.get<any>(this.API+'/buscarProdutoPorTipo', { params });
+    return this.httpClient.get<any>(this.environmentApi+'/buscarProdutoPorTipo', { params });
   }
 }
