@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment.development';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -8,7 +9,7 @@ import { LoginService } from './login.service';
   providedIn: 'root',
 })
 export class ProdutoService {
-  private readonly API: string = 'http://localhost:8080/produtos';
+  private environmentApi: string = environment.apiUrl + '/produtos';
 
   constructor(private httpClient: HttpClient,
     private loginService: LoginService) {}
